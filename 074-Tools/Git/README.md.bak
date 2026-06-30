@@ -1,0 +1,165 @@
+# Git — Sistema de Control de Versiones
+
+## ¿Qué es Git?
+
+Git es un sistema de control de versiones distribuido creado por Linus Torvalds en 2005. Permite rastrear cambios en el código fuente, coordinar trabajo entre múltiples desarrolladores y mantener un historial completo del proyecto.
+
+## Conceptos Fundamentales
+
+- **Repositorio (repo)**: Almacén donde se guarda el historial completo del proyecto y sus metadatos.
+- **Commit**: Instantánea del estado del proyecto en un momento dado. Cada commit tiene un hash SHA-1 único.
+- **Rama (branch)**: Línea independiente de desarrollo. La rama por defecto es `main` o `master`.
+- **HEAD**: Puntero que indica el commit actual en el que se está trabajando.
+- **Staging area (index)**: Área intermedia donde se preparan los cambios antes de confirmarlos.
+- **Working directory**: El directorio actual donde se modifican los archivos.
+
+## Flujo de Trabajo Básico
+
+```bash
+# Inicializar un repositorio
+git init
+
+# Clonar un repositorio existente
+git clone <url>
+
+# Ver estado del repositorio
+git status
+
+# Añadir cambios al staging
+git add <archivo>
+git add .             # Añadir todos los cambios
+
+# Confirmar cambios
+git commit -m "mensaje descriptivo"
+
+# Enviar cambios al remoto
+git push origin <rama>
+
+# Obtener cambios del remoto
+git pull origin <rama>
+
+# Ver historial
+git log --oneline --graph
+```
+
+## Ramas y Fusiones
+
+```bash
+# Crear una rama
+git branch <nombre-rama>
+
+# Cambiar a una rama
+git checkout <nombre-rama>
+git switch <nombre-rama>    # Alternativa moderna
+
+# Crear y cambiar a nueva rama
+git checkout -b <nombre-rama>
+
+# Fusionar una rama a la actual
+git merge <nombre-rama>
+
+# Eliminar una rama
+git branch -d <nombre-rama>
+```
+
+## Estrategias de Merge
+
+- **Fast-forward**: Cuando la rama destino no ha tenido nuevos commits, Git simplemente mueve el puntero.
+- **Merge commit (3-way)**: Crea un commit de fusión cuando ambas ramas han divergido.
+- **Squash**: Combina todos los commits de una rama en uno solo antes de fusionar.
+- **Rebase**: Reaplica los commits de una rama sobre la punta de otra, manteniendo un historial lineal.
+
+## Resolución de Conflictos
+
+Cuando Git no puede fusionar automáticamente, aparecen marcadores de conflicto:
+
+```text
+<<<<<<< HEAD
+código actual
+=======
+código entrante
+>>>>>>> rama-origen
+```
+
+Se resuelven editando manualmente el archivo, eliminando los marcadores y confirmando.
+
+## Comandos Avanzados
+
+```bash
+# Stash: guardar cambios temporales
+git stash
+git stash pop
+git stash list
+
+# Rebase interactivo
+git rebase -i HEAD~3
+
+# Cherry-pick: aplicar un commit específico
+git cherry-pick <hash>
+
+# Bisect: encontrar el commit que introdujo un bug
+git bisect start
+git bisect bad
+git bisect good <hash>
+
+# Reset vs Revert
+git reset --hard HEAD~1   # Descarta commits (peligroso)
+git revert <hash>          # Crea un commit que deshace cambios (seguro)
+```
+
+## Configuración
+
+```bash
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu@email.com"
+git config --global core.editor "code --wait"
+git config --global alias.lg "log --oneline --graph --all"
+```
+
+## Estrategias de Ramificación
+
+- **Git Flow**: `main`, `develop`, `feature/*`, `release/*`, `hotfix/*`
+- **GitHub Flow**: `main` + `feature/*` con Pull Requests
+- **Trunk-Based Development**: Ramas cortas que se fusionan frecuentemente a `main`
+
+## Hooks
+
+Scripts que se ejecutan automáticamente en eventos de Git:
+- `pre-commit`: Antes de hacer commit (linters, tests)
+- `post-commit`: Después del commit
+- `pre-push`: Antes de enviar al remoto
+- `post-merge`: Después de fusionar
+
+## Buenas Prácticas
+
+1. Commits atómicos y con mensajes descriptivos (imperativo, presente)
+2. Una rama por funcionalidad / bugfix
+3. Pull Requests con descripción clara y revisión de código
+4. No commitear archivos binarios o generados (usar `.gitignore`)
+5. Mantener el historial limpio con rebase interactivo antes de fusionar
+6. Firmar commits con GPG para verificar autoría
+7. Sincronizar frecuentemente con la rama principal
+
+## Comandos Útiles para Diagnóstico
+
+```bash
+git diff                 # Cambios sin staging
+git diff --staged        # Cambios en staging
+
+git blame <archivo>      # Quién modificó cada línea
+git show <hash>          # Detalles de un commit
+git reflog               # Registro de movimientos de HEAD
+git gc                   # Limpieza y optimización del repositorio
+```
+
+## Integración con Plataformas
+
+- **GitHub**: Pull Requests, Actions, Issues, Projects
+- **GitLab**: Merge Requests, CI/CD integrado, registries
+- **Bitbucket**: Pipelines, Pull Requests, integración con Jira
+
+## Recursos
+
+- [Pro Git Book](https://git-scm.com/book/es/v2)
+- [Git Flight Rules](https://github.com/k88hudson/git-flight-rules)
+- [Atlassian Git Tutorials](https://www.atlassian.com/git/tutorials)
