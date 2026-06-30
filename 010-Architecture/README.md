@@ -1,57 +1,83 @@
-# 010-Arquitectura de Software
+# 010-Architecture: Arquitectura de Software
 
-## Descripción del dominio
+## Descripción ampliada del dominio
 
-La arquitectura de software es la disciplina que define la estructura fundamental de un sistema: sus componentes, sus relaciones internas y externas, y los principios que guían su diseño y evolución. Abarca desde decisiones de alto nivel (estilo arquitectónico, división en módulos, patrones de comunicación) hasta decisiones tácticas que afectan el rendimiento, la seguridad, la mantenibilidad y la escalabilidad del sistema. Una buena arquitectura reduce la fricción del cambio, permite probar el sistema de forma aislada y alinea la implementación técnica con los objetivos del negocio.
+La arquitectura de software define la estructura fundamental de un sistema: sus componentes, sus relaciones, sus principios de diseño y la evolución a lo largo del tiempo. Es la base sobre la cual se toman decisiones técnicas críticas que determinan la escalabilidad, mantenibilidad, rendimiento, seguridad y costo del sistema. Este módulo cubre estilos arquitectónicos (monolítico, microservicios, event-driven, hexagonal, clean architecture, CQRS, event sourcing), principios de diseño (SOLID, DRY, KISS, YAGNI, Law of Demeter), patrones arquitectónicos, documentación (C4 model, ADRs), evaluación de arquitecturas (ATAM, SAAM), y gobierno técnico. La evolución arquitectónica ha sido: mainframe (1960s) → cliente-servidor (1980s) → aplicaciones web (1990s) → SOA (2000s) → microservicios (2010s) → arquitecturas cloud-native, event-driven y serverless (2020s). La tendencia actual incluye arquitecturas modulares, domain-driven design (DDD), arquitecturas basadas en inteligencia artificial (AI-native architectures), y sistemas autónomos auto-gestionados.
 
-## Conceptos clave
+## Tabla de conceptos clave
 
-- **Monolito**: aplicación única donde todos los componentes (UI, lógica, datos) se despliegan juntos. Simple al inicio, pero difícil de escalar y mantener a gran escala.
-- **Microservicios**: estilo arquitectónico que estructura la aplicación como un conjunto de servicios pequeños, independientes, desplegables por separado y organizados en torno a capacidades de negocio.
-- **Arquitectura Hexagonal (Ports & Adapters)**: aísla el núcleo de la lógica de negocio de los detalles técnicos (bases de datos, APIs, UI) mediante puertos (interfaces) y adaptadores (implementaciones).
-- **Clean Architecture**: propuesta por Robert C. Martin, organiza el código en capas concéntricas donde las dependencias apuntan hacia adentro (hacia las entidades y casos de uso), manteniendo el núcleo independiente de frameworks y bases de datos.
-- **CQRS (Command Query Responsibility Segregation)**: separa las operaciones de lectura (queries) de las de escritura (commands) en modelos distintos, optimizando cada uno por separado.
-- **Event Sourcing**: almacena el estado de un sistema como una secuencia inmutable de eventos en lugar de solo el estado actual. Permite auditoría completa, proyecciones múltiples y reconstrucción histórica.
-- **Arquitectura orientada a eventos (EDA)**: los componentes se comunican mediante eventos asíncronos, lo que desacopla productores de consumidores y mejora la resiliencia.
-- **Domain-Driven Design (DDD)**: enfoque que modela el software en torno al dominio del negocio, utilizando un lenguaje ubicuo, bounded contexts y agregados.
-- **Arquitectura basada en capas**: organización jerárquica (presentación, negocio, datos) donde cada capa solo depende de la inferior.
-- **Service Mesh**: capa de infraestructura para gestionar la comunicación entre microservicios (service discovery, balanceo, retry, circuit breaker).
+| Concepto | Descripción | Cuándo usarlo |
+|----------|-------------|---------------|
+| Monolítico | Una sola aplicación que contiene toda la funcionalidad | Equipos pequeños, MVP, aplicaciones simples |
+| Microservicios | Servicios independientes desplegables, cada uno con un solo dominio | Equipos grandes, escalabilidad independiente, despliegue frecuente |
+| Event-Driven | Comunicación asíncrona mediante eventos (broker) | Sistemas distribuidos, desacoplamiento, escalabilidad |
+| CQRS | Separación de operaciones de lectura y escritura | Sistemas con diferentes cargas de lectura/escritura |
+| Event Sourcing | Almacenamiento de eventos en lugar de estado actual | Auditoría completa, trazabilidad, reconstrucción de estado |
+| Hexagonal (Ports & Adapters) | Aislamiento del núcleo de negocio de la infraestructura | Aplicaciones con múltiples fuentes de entrada/salida |
+| Clean Architecture | Capas concéntricas con dependencias hacia adentro (Dominio → Aplicación → Infraestructura) | Aplicaciones empresariales que necesitan mantenibilidad a largo plazo |
+| CQRS + ES (Event Storming) | Patrón combinado para sistemas complejos | Sistemas financieros, logísticos, colaborativos |
+| Service Mesh | Capa de infraestructura para comunicación entre microservicios | Microservicios con necesidades de observabilidad, seguridad, tráfico |
+| Strangler Fig | Migración gradual de monolitos a microservicios | Refactorización de sistemas legacy |
+| API Gateway | Punto de entrada único para APIs con routing, auth, rate limiting | Sistemas de microservicios, seguridad unificada |
+| Saga | Coordinación de transacciones distribuidas | Microservicios con operaciones multi-servicio |
 
 ## Tecnologías principales
 
-- **Lenguajes**: Java, C#, TypeScript, Go, Python, Rust, Kotlin
-- **Frameworks**: Spring Boot, .NET Core, NestJS, FastAPI, Axon Framework
-- **Infraestructura**: Docker, Kubernetes, Istio, Consul, Envoy, NGINX
-- **Bases de datos**: PostgreSQL, MongoDB, Cassandra, Redis, Kafka (event store)
-- **Herramientas de diseño**: PlantUML, Draw.io, Structurizr, ArchUnit, C4 Model
-- **Patrones de comunicación**: REST, gRPC, GraphQL, RabbitMQ, Apache Kafka, NATS
+| Enfoque | Tecnologías/Herramientas | Propósito |
+|---------|-------------------------|-----------|
+| Modelado | Structurizr (C4 model), PlantUML, Mermaid, Draw.io, ArchiMate | Documentación y visualización arquitectónica |
+| Comunicación síncrona | REST (OpenAPI 3.1), gRPC, GraphQL, Apache Thrift | APIs, servicios |
+| Comunicación asíncrona | Apache Kafka, RabbitMQ, AWS SQS/SNS, NATS, Pulsar, Redis Streams | Event-driven, mensajería |
+| Service Mesh | Istio, Linkerd, Consul Connect, Cilium, AWS App Mesh | Comunicación, seguridad, observabilidad |
+| API Gateway | Kong, AWS API Gateway, Apigee, Tyk, Traefik, HAProxy, Envoy | Punto de entrada, políticas |
+| Observabilidad | OpenTelemetry, Prometheus, Grafana, Jaeger, ELK/Loki | Monitoreo, tracing, logs |
+| Containers/K8s | Docker, Kubernetes, Helm, Kustomize | Despliegue y orquestación |
+| Serverless | AWS Lambda, Cloud Functions, Azure Functions, Cloudflare Workers | Computación sin servidor, event-driven |
+| DB/Storage | PostgreSQL, CockroachDB, S3, DynamoDB, Redis, Elasticsearch | Almacenamiento según patrón de acceso |
+| CI/CD | GitHub Actions, GitLab CI/CD, ArgoCD, GitOps | Pipeline de entrega |
+| Gobernanza | ArchUnit, SonarQube, ADR (Markdown Any Decision Records) | Reglas, calidad, documentación de decisiones |
 
-## Hoja de ruta
+## Hoja de ruta detallada
 
-1. **Principiante**: aprender los fundamentos de la arquitectura basada en capas y monolítica; conocer los principios SOLID y cómo aplicarlos; diseñar APIs REST básicas; entender el modelo C4 para documentar arquitectura.
-2. **Intermedio**: implementar Clean Architecture o hexagonal en un proyecto real; aplicar DDD con bounded contexts y agregados; introducir CQRS básico con separación de lecturas/escrituras; usar Docker para aislar componentes.
-3. **Avanzado**: diseñar sistemas basados en microservicios con comunicación asíncrona (eventos, mensajería); implementar Event Sourcing con almacenamiento de eventos; adoptar Service Mesh (Istio/Linkerd) para gestionar tráfico; aplicar patrones de resiliencia (circuit breaker, bulkhead, retry with backoff).
-4. **Experto**: definir estrategias de evolución arquitectónica (strangler fig, event storming); diseñar arquitecturas serverless y edge computing; contribuir a estándares y herramientas de arquitectura; evaluar trade-offs entre estilos arquitectónicos según el contexto del negocio.
+1. **Principiante (0-3 meses)**: Principios fundamentales: SOLID (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion), DRY (Don't Repeat Yourself), KISS (Keep It Simple), YAGNI (You Aren't Gonna Need It), Law of Demeter, Separation of Concerns, Composition over Inheritance. Estilos arquitectónicos básicos: monolítico vs capas (n-tier), MVC arquitectura (Model-View-Controller) y sus variantes. Modelado y documentación: C4 model (Context, Container, Component, Code diagrams), diagramas de componentes y despliegue UML básicos. Principios de acoplamiento y cohesión: high cohesion, low coupling, tipos de acoplamiento (content, common, control, stamp, data).
+   - Práctica: Documentar la arquitectura de una aplicación existente usando C4 model. Identificar principios SOLID en código real.
+   - Lectura: "Clean Architecture" (Martin) — capítulos 1-16, "Fundamentals of Software Architecture" (Richards, Ford) — parte I.
+
+2. **Intermedio (3-8 meses)**: Domain-Driven Design (DDD): ubicuo language (lenguaje ubicuo), bounded context (contextos delimitados), entities, value objects, aggregates, domain events, repositories, domain services. Arquitectura hexagonal (Ports and Adapters): puertos (interfaces), adaptadores (implementaciones), dominio puro sin dependencias externas. Clean Architecture: capas (Entities, Use Cases, Interface Adapters, Frameworks/Drivers), dependency rule (las dependencias apuntan hacia adentro). Microservicios: principios (bounded context, database per service, decentralized data management, polyglot persistence), comunicación síncrona (REST, gRPC, GraphQL) y asíncrona (events, message queues). API design: RESTful APIs (OpenAPI 3.1), versionado (URI, header, content negotiation), paginación (cursor-based vs offset-based), HATEOAS. ADRs (Architecture Decision Records): estructura (Title, Context, Decision, Consequences, Status).
+   - Práctica: Modelar un dominio con DDD (Event Storming). Implementar arquitectura hexagonal con Spring Boot / NestJS. Escribir ADRs para decisiones arquitectónicas.
+   - Lectura: "Domain-Driven Design" (Evans), "Implementing Domain-Driven Design" (Vernon), "Building Microservices" (Newman, 2ª ed.), "Clean Architecture" (Martin) parte II.
+
+3. **Avanzado (8-14 meses)**: Event-Driven Architecture: patrones (event notification, event-carried state transfer, event sourcing), garantías de entrega (at-least-once, exactly-once, idempotencia), event brokers (Kafka: topics, partitions, consumer groups, offsets, rebalancing). CQRS (Command Query Responsibility Segregation): commands vs queries, command bus, query handlers, proyecciones materializadas, eventual consistency. Sagas: coreografía (eventos) y orquestación (coordinador central), compensaciones (rollback), estado de saga. Evaluación de arquitectura: ATAM (Architecture Tradeoff Analysis Method), quality attributes (scalability, availability, modifiability, security, testability, performance, deployability), arquitectura vs requisitos no funcionales. Event Storming: técnica colaborativa de modelado de dominio (eventos, comandos, actores, políticas, read models). Arquitectura serverless: patrones (API Gateway + Lambda, Step Functions, SQS + Lambda, event-driven workflows), cold starts, observabilidad, vendor lock-in considerations.
+   - Práctica: Implementar CQRS + Event Sourcing para un dominio financiero. Diseñar saga orquestada para e-commerce. Evaluar arquitectura con ATAM.
+   - Lectura: "Building Event-Driven Microservices" (Bellemare), "Designing Data-Intensive Applications" (Kleppmann), "Software Architecture: The Hard Parts" (Ford, Richards).
+
+4. **Experto (14+ meses)**: Arquitecturas distribuidas y la paradoja CAP: consistencia (linealizable, causal, eventual), disponibilidad (HA: 9s de uptime), tolerancia a partición, teorema PACELC (CAP + latencia). Transacciones distribuidas: 2PC, 3PC, TCC (Try-Confirm/Cancel), patrones de consenso (Paxos, Raft, Multi-Paxos, Zab). Escalabilidad: horizontal vs vertical, sharding, read replicas, caching tiers (CDN, Redis, Memcached, in-memory cache), cache invalidation strategies (write-through, write-behind, cache-aside, TTL). Chaos Engineering: principios de chaos, plataformas (Chaos Mesh, Litmus, Gremlin), experimentos controlados, steady state, hypothesis-driven chaos. Migration strategies: Strangler Fig pattern, feature flags, parallel run, dark launching, canary releases, blue/green, database migrations sin downtime. Architecture governance: arquitectura evolutiva (evolutionary architecture), fitness functions (automated architecture verification), ArchUnit, NetArchTest, governance boards. AI-native architecture: LLM-integration patterns (router, chain, orchestrator, RAG), agent architectures, Model-as-a-Service, ML pipelines.
+   - Proyecto: System design interview — diseñar Twitter, Uber, YouTube, Netflix a alto nivel. Documentar architecture runway para startup. Implementar fitness function con ArchUnit.
+   - Lectura: "Designing Data-Intensive Applications" (Kleppmann) — todo, "Software Architecture: The Hard Parts" (Ford, Richards), "Building Evolutionary Architectures" (Ford, Parsons, Kua).
 
 ## Relaciones con otros módulos
 
-- [011-DesignPatterns](../011-DesignPatterns/) — los patrones de diseño GoF y modernos son el vocabulario táctico que implementa las decisiones arquitectónicas.
-- [012-Testing](../012-Testing/) — la arquitectura determina qué tan testeable es el sistema (inyección de dependencias, puertos/adaptadores, mocks).
-- [013-DevOps](../013-DevOps/) — la arquitectura influye en el despliegue (monolito vs. microservicios) y en las estrategias de observabilidad.
-- [014-CICD](../014-CICD/) — los pipelines de CI/CD deben reflejar la topología de despliegue y las dependencias entre módulos.
-- [015-Automation](../015-Automation/) — automatización de provisionamiento y configuración de infraestructura arquitectónica.
-- [017-MFT](../017-MFT/) — la transferencia segura de archivos se integra como un adaptador en la arquitectura hexagonal.
-- [018-ERP](../018-ERP/) — los sistemas ERP existentes suelen ser monolíticos; las estrategias de modernización usan patrones arquitectónicos como strangler fig.
-- [019-CRM](../019-CRM/) — las integraciones con CRM requieren decisiones arquitectónicas sobre acoplamiento, sincronización y formatos de datos.
+| Módulo | Relación |
+|--------|----------|
+| [000-Core](../000-Core/) | Algoritmos y estructuras para diseño de sistemas |
+| [002-Frameworks](../002-Frameworks/) | Implementación de patrones arquitectónicos en frameworks |
+| [003-Databases](../003-Databases/) | Patrones de persistencia, CQRS, event sourcing |
+| [005-Cloud](../005-Cloud/) | Arquitecturas cloud-native, Well-Architected Framework |
+| [007-Orchestration](../007-Orchestration/) | Patrones de despliegue, service mesh |
+| [008-Networking](../008-Networking/) | API Gateway, service mesh, latencia de red |
+| [009-Security](../009-Security/) | Secure architecture, threat modeling, trust boundaries |
+| [011-DesignPatterns](../011-DesignPatterns/) | Patrones de diseño como bloques de construcción |
+| [012-Testing](../012-Testing/) | Test architecture, integration testing, contract testing |
+| [013-DevOps](../013-DevOps/) | DevOps como facilitador de arquitecturas modernas |
+| [031-AI](../031-AI/) | Arquitecturas de sistemas de IA, AI-native patterns |
 
 ## Recursos recomendados
 
-- *Clean Architecture* — Robert C. Martin
-- *Patterns of Enterprise Application Architecture* — Martin Fowler
-- *Building Microservices* — Sam Newman
-- *Domain-Driven Design: Tackling Complexity in the Heart of Software* — Eric Evans
-- *Fundamentals of Software Architecture* — Mark Richards, Neal Ford
-- *Software Architecture in Practice* — Bass, Clements, Kazman
-- *Implementing Domain-Driven Design* — Vaughn Vernon
-- *CQRS by Martin Fowler* — martinfowler.com/bliki/CQRS.html
-- *The C4 Model for Visualising Software Architecture* — c4model.com
+- **Libros**: "Clean Architecture" (Martin), "Fundamentals of Software Architecture" (Richards, Ford), "Software Architecture: The Hard Parts" (Ford, Richards), "Building Microservices" (Newman, 2ª ed.), "Domain-Driven Design" (Evans), "Designing Data-Intensive Applications" (Kleppmann), "Building Event-Driven Microservices" (Bellemare), "Building Evolutionary Architectures" (Ford, Parsons).
+- **Cursos**: Coursera "Software Design and Architecture" (U Alberta), Pluralsight "Software Architecture Path", O'Reilly Architecture Summit, "Grokking the System Design Interview" (DesignGurus).
+- **Documentación**: C4 model (c4model.com), arc42 template, ISO/IEC 42010 (IEEE 1471), TOGAF, ArchiMate, Structurizr.
+- **Práctica**: System design problems (systemdesign.one, bytebytego), EventStorming.com workshops, Architecture Katas, O'Reilly Architecture Katas.
+
+## Notas adicionales
+
+La arquitectura de software es tanto técnica como social; involucra comunicación con stakeholders, trade-offs y decisiones que afectan al equipo por años. El "software architect" no es un rol jerárquico sino una responsabilidad técnica. Practicar system design interviews es excelente ejercicio. El C4 model es el estándar de facto para documentación arquitectónica. ADRs capturan el "por qué" detrás de las decisiones. La arquitectura evolutiva (evolutionary architecture) reconoce que la arquitectura debe cambiar con el tiempo.

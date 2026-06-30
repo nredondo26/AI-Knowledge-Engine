@@ -1,57 +1,78 @@
 # 004-OperatingSystems: Sistemas Operativos
 
-## Descripción del dominio
+## Descripción ampliada del dominio
 
-Un sistema operativo es el software fundamental que gestiona el hardware y provee servicios a las aplicaciones. Este módulo cubre los conceptos esenciales de los sistemas operativos modernos: gestión de procesos e hilos (threads), planificación (scheduling), sincronización, gestión de memoria (virtual, paginación, segmentación), sistemas de archivos, entrada/salida (drivers, interrupciones), virtualización y seguridad a nivel de sistema. Se enfoca principalmente en Linux (por su relevancia en servidores, cloud y contenedores), Windows y macOS.
+Los sistemas operativos actúan como intermediarios entre el hardware y el software de aplicación, gestionando recursos como CPU, memoria, almacenamiento y dispositivos de E/S. Este módulo cubre la teoría y práctica de los SO modernos incluyendo planificación de procesos, gestión de memoria virtual y física, sistemas de archivos, E/S, sincronización, interrupciones, llamadas al sistema, y los principales SO del mercado (Linux, Windows, macOS). Linux domina el mundo cloud, servidores y embebidos; Windows es estándar en desktop empresarial y gaming; macOS en el ecosistema creativo y de desarrollo. Los conceptos fundamentales son universales: un proceso es un programa en ejecución con su propio espacio de direcciones; un hilo (thread) es una unidad de ejecución dentro de un proceso; el kernel es el núcleo del SO que opera en modo privilegiado. La evolución incluye kernels monolíticos (Linux), microkernels (Minix, QNX), kernels híbridos (Windows NT, macOS XNU), y más recientemente unikernels (MirageOS) y sistemas operativos para contenedores (Container Linux, Flatcar).
 
-## Conceptos clave
+## Tabla de conceptos clave
 
-- **Procesos vs hilos**: PCB (Process Control Block), espacio de direcciones, cambio de contexto, hilos a nivel de usuario vs kernel
-- **Planificación (scheduling)**: FCFS, SJF, Round Robin, Multilevel Feedback Queue (MLFQ), CFS (Linux), O(1) scheduler
-- **Concurrencia y sincronización**: Mutexes, semáforos, monitores, variables de condición, barriers, spinlocks, RCU (Read-Copy-Update)
-- **Deadlocks**: Condiciones de Coffman, prevención, evasión (algoritmo del banquero), detección y recuperación
-- **Memoria virtual**: Paginación (page tables, TLB, multi-level page tables), segmentación, swapping, page replacement (LRU, Clock, NRU, LFU)
-- **Asignación de memoria**: Buddy system, slab allocator, malloc/free, mmap, brk, page faults, thrashing
-- **Sistemas de archivos**: Inodos, VFS (Virtual File System), ext4, XFS, Btrfs, ZFS, NTFS, APFS; journaling, COW (Copy-on-Write)
-- **Entrada/Salida**: Buffered vs unbuffered I/O, mmap, DMA, interrupciones, polling, SPOOLing, disk scheduling (Elevator/SCAN)
-- **Llamadas al sistema (syscalls)**: read, write, open, close, fork, execve, mmap, sbrk, ioctl, select, epoll, io_uring
-- **Espacio de usuario vs kernel**: Anillos de protección (ring 0-3), system calls, módulos del kernel, eBPF
-- **Contenedores como procesos**: Namespaces (PID, NET, MNT, UTS, IPC, USER, CGROUP), cgroups v1/v2, unshare, pivot_root
-- **POSIX**: Estándar de portabilidad, signals, pipes, FIFOs, sockets Unix, semáforos POSIX, shared memory POSIX
+| Concepto | Descripción | Implementación destacada |
+|----------|-------------|-------------------------|
+| Proceso | Programa en ejecución con espacio de direcciones independiente | fork/exec (Linux), CreateProcess (Windows) |
+| Hilo (Thread) | Unidad de ejecución ligera dentro de un proceso | pthreads (POSIX), Win32 threads, goroutines (Go) |
+| Planificación (scheduling) | Algoritmo que decide qué proceso/hilo ejecuta la CPU | CFS (Linux), Round Robin, FIFO, MLFQ |
+| Context switch | Cambio de ejecución entre procesos/hilos con guardado de estado | Interrupción de timer (100-1000 Hz) |
+| Memoria virtual | Abstracción que da a cada proceso su propio espacio de direcciones | Page tables, TLB, MMU |
+| Paginación | División de memoria en páginas fijas (4KB típicamente) | Page cache, swap, demand paging |
+| Segmentación | División de memoria en segmentos lógicos | GDT/LDT (x86), segmentación en arquitecturas obsoletas |
+| Sistema de archivos | Organización de datos en almacenamiento persistente | ext4, XFS, NTFS, APFS, Btrfs, ZFS |
+| Llamada al sistema (syscall) | Interfaz entre espacio de usuario y kernel | syscall instrucción (x86-64), int 0x80 (legacy) |
+| Interrupción | Señal hardware/software que cambia el flujo de ejecución | IRQ, trap, exception, APIC |
+| DMA (Direct Memory Access) | Transferencia de datos sin intervención de CPU | Controlador DMA, PCIe DMA |
+| Lock/Spinlock | Mecanismo de exclusión mutua para acceso concurrente | futex (Linux), mutex, semáforo, RWLock |
+| Deadlock | Bloqueo permanente de procesos esperando recursos compartidos | Prevención, evitación, detección, recuperación |
+| IPC (Inter-Process Communication) | Comunicación entre procesos | pipes, sockets, shared memory, message queues, signals |
 
 ## Tecnologías principales
 
-| Componente | Linux | Windows | macOS |
-|------------|-------|---------|-------|
-| Kernel | Linux kernel (monolítico modular) | NT kernel (híbrido) | XNU (híbrido, basado en Mach + FreeBSD) |
-| Init system | systemd | NT (Session Manager) | launchd |
-| Filesystem | ext4, XFS, Btrfs, ZFS | NTFS, ReFS | APFS |
-| Package manager | apt, dnf, pacman, apk | winget, Chocolatey | Homebrew, MacPorts |
-| Container support | Nativo (cgroups/namespaces) | Docker Desktop, WSL2 | Docker Desktop |
-| Shell | bash, zsh, fish | PowerShell, CMD | zsh (por defecto desde Catalina) |
-| Monitorización | top, htop, perf, strace, eBPF | Process Monitor, ETW | Activity Monitor, dtrace, Instruments |
+| Sistema Operativo | Kernel | Licencia | Gestor paquetes | Sistema archivos | Init system | Caso de uso |
+|-------------------|--------|----------|-----------------|-----------------|-------------|-------------|
+| Linux (Ubuntu, Debian, RHEL, Arch) | Monolítico (Linux) | GPLv2 | apt, dnf, pacman | ext4, XFS, Btrfs, ZFS | systemd | Servidores, cloud, desarrollo, desktop |
+| Windows 11/Server 2025 | Híbrido (NT) | Propietaria | winget, MSI, Chocolatey | NTFS, ReFS | Windows Service Manager | Desktop empresarial, gaming, servers |
+| macOS 15 Sequoia | Híbrido (XNU) | APSL (open source partial) | Homebrew, .pkg, Mac App Store | APFS | launchd | Desarrollo, creativo, consumer |
+| FreeBSD | Monolítico (BSD) | BSD | pkg, ports | UFS2, ZFS | init | Servidores, networking, storage |
+| Android (AOSP) | Monolítico (Linux mod) | Apache 2.0 | APK, Google Play | f2fs, ext4 | init/systemd | Móviles, tablets, IoT |
+| ChromeOS | Monolítico (Linux + Chromium) | BSD-like | Portage/Crostini | ext4 | systemd | Chromebooks, educación, kioskos |
 
-## Hoja de ruta
+## Hoja de ruta detallada
 
-1. **Principiante**: Comandos básicos de Linux (ls, cd, mv, cp, rm, chmod, chown, ps, top) — estructura del sistema de archivos (FHS) — pipes y redirección — bash scripting básico — gestores de paquetes
-2. **Intermedio**: Procesos (ps, top, htop, kill, nice, renice) — permisos (u/g/o, ACL, sticky bit, SUID/SGID) — syscalls — systemd (unit files, journalctl) — networking (ip, ss, netstat, iptables/nftables) — cron/systemd timers
-3. **Avanzado**: Planificación de procesos (CFS, nice values) — memoria virtual (vmstat, /proc/meminfo, OOM killer) — sistemas de archivos (mkfs, mount, tune2fs, fsck) — namespaces y cgroups — eBPF básico — strace, ltrace, perf, bpftrace
-4. **Experto**: Módulos del kernel, escritura de device drivers — eBPF avanzado (XDP, TC) — KVM/QEMU virtualización — SELinux/AppArmor — rendimiento extremo (NUMA, huge pages, CPU pinning, io_uring) — RTOS para sistemas embebidos/tiempo real
+1. **Principiante (0-3 meses)**: Conceptos: qué es un SO, kernel, espacio de usuario vs kernel. Llamadas al sistema básicas (open, read, write, close, fork, exec). Procesos: creación, terminación, estados (running, ready, blocked, zombie, orphan). Señales Unix: SIGINT, SIGTERM, SIGKILL, signal handlers. Sistema de archivos: jerarquía Linux (/, /home, /etc, /var, /proc, /sys). Permisos: chmod, chown, ACLs. Usuarios y grupos. Terminal, shell (bash, zsh), scripting básico. pipes y redirección. Editores: vim/nano. Procesos foreground/background (&, fg, bg, jobs). Herramientas básicas: ps, top, kill, df, du, ls, cat, grep, find.
+   - Práctica: Navegar sistema de archivos Linux, crear scripts bash, gestionar procesos.
+   - Lectura: "The Linux Command Line" (Shotts), "Operating Systems: Three Easy Pieces" (capítulos 1-15).
+
+2. **Intermedio (3-8 meses)**: Planificación de procesos: CFS, niceness, scheduling classes (SCHED_OTHER, SCHED_FIFO, SCHED_RR). Memoria virtual: page tables multinivel, TLB, page faults, swapping, OOM killer. Memoria caché: page cache, buffer cache, dentry cache. Sincronización: mutexes, semáforos, variables de condición, barriers, futex. Deadlocks: condiciones de Coffman, estrategias (prevención, evitación banquero, detección). Sistemas de archivos: ext4 (journaling), XFS, Btrfs (copy-on-write, snapshots, subvolumes), ZFS (pooled storage, checksums, deduplication). RAID: 0, 1, 5, 6, 10, JBOD. LVM: volúmenes lógicos, snapshots. Dispositivos de E/S: caracter, bloque, network. /proc y /sys: interfaces de información del kernel. IPC: pipes nombradas (FIFO), colas de mensajes POSIX, memoria compartida (shmget, mmap), señales. cgroups y namespaces (base de contenedores). systemd: units, services, timers, journald.
+   - Práctica: Implementar productor-consumidor con threads y mutexes. Script de monitoreo de sistema. Configurar servicio systemd.
+   - Lectura: "Operating Systems: Three Easy Pieces" (Remzi), "Linux Kernel Development" (Love).
+
+3. **Avanzado (8-14 meses)**: Kernel internals: syscall dispatch, interrupt handling (IRQ, softirq, tasklets, workqueues), bottom halves. Gestión de memoria del kernel: slab allocator, kmalloc, vmalloc, CMA, huge pages. Control groups (cgroups v2): CPU, memory, IO, PID controllers. eBPF: programación en el kernel sin modificar el kernel, tracing, networking, security. Namespaces: PID, net, mount, user, IPC, UTS. Virtualización: KVM, QEMU, virtio, para-virtualización, hardware-assisted virtualization (Intel VT-x, AMD-V). Sistemas de archivos avanzados: FUSE (Filesystem in Userspace), tmpfs, overlayfs (Docker layers). Device drivers: character drivers, platform drivers, device tree, PCI/ACPI. Tiempo real: PREEMPT_RT, jitter, deadline scheduling. Performance tuning: perf, ftrace, flame graphs, strace, ltrace.
+   - Práctica: Escribir un módulo kernel simple (hello world). Programa eBPF que trace syscalls. Driver de dispositivo virtual.
+   - Lectura: "Linux Device Drivers" (Corbet, Rubini, Kroah-Hartman), "BPF Performance Tools" (Gregg).
+
+4. **Experto (14+ meses)**: Diseño de SO: implementación de un kernel simple (xv6, OS/161). Microkernels vs monolithic kernels: seL4 (verificado formalmente), Minix, QNX. Sistemas operativos distribuidos: Plan 9, Inferno. Unikernels: MirageOS, OSv, IncludeOS — SO especializados para una sola aplicación. Real-time operating systems (RTOS): FreeRTOS, Zephyr, VxWorks — planificación determinista, latencia predecible. Trusted Execution: ARM TrustZone, Intel SGX/TDX, AMD SEV-SNP, confidential computing. Formal verification of OS: seL4 verification, CertiKOS. OS for ML/AI: GPU/NPU memory management, CUDA, ROCm, TensorRT. Optimización de rendimiento: cache coloring, NUMA awareness, CPU pinning, isolcpus, nohz_full. Live patching: ksplice, kpatch, live kernel updates. Filesystem benchmarking: fio, bonnie++, mdtest.
+   - Práctica: Contribución al kernel Linux (driver, bug fix, eBPF program). Implementar microkernel simple. Portar SO a arquitectura RISC-V.
+   - Lectura: "Understanding the Linux Kernel" (Bovet, Cesati), "Operating Systems Design and Implementation" (Tanenbaum), Linux kernel mailing list, LWN.net.
 
 ## Relaciones con otros módulos
 
-- [000-Core](../000-Core/) — Algoritmos de planificación y page replacement; gestión de memoria
-- [001-Languages](../001-Languages/) — Compilación nativa, syscalls desde lenguajes (Go, Rust, C), FFI
-- [005-Cloud](../005-Cloud/) — AMIs (Amazon Machine Images), imágenes de VM en cloud, optimización de SO
-- [006-Containers](../006-Containers/) — Namespaces, cgroups, imágenes Docker, WSL2
-- [007-Orchestration](../007-Orchestration/) — Nodos K8s, sistema operativo del nodo (Container-Optimized OS, Bottlerocket, Flatcar)
-- [008-Networking](../008-Networking/) — TCP/IP stack del kernel, netfilter, eBPF/XDP, socket programming
-- [009-Security](../009-Security/) — SELinux, AppArmor, seccomp, grsecurity, kernel hardening
-- [028-Embedded](../028-Embedded/) — Linux embebido (Yocto, Buildroot), RTOS (FreeRTOS, Zephyr)
+| Módulo | Relación |
+|--------|----------|
+| [000-Core](../000-Core/) | Memoria, procesos, algoritmos de scheduling, page replacement |
+| [001-Languages](../001-Languages/) | Syscalls desde lenguajes, gestión de memoria nativa (C, Rust) |
+| [006-Containers](../006-Containers/) | cgroups, namespaces, overlayfs como base de contenedores |
+| [007-Orchestration](../007-Orchestration/) | K8s scheduling, node resources, Pod cgroups |
+| [008-Networking](../008-Networking/) | Network stack TCP/IP en kernel, sockets, netfilter, eBPF |
+| [009-Security](../009-Security/) | SELinux, AppArmor, seccomp, kernel hardening, LSM |
+| [010-Architecture](../010-Architecture/) | Arquitecturas de SO, modos de operación, system calls |
+| [028-Embedded](../028-Embedded/) | Linux embebido, Yocto, Buildroot, RTOS |
+| [029-IoT](../029-IoT/) | SO para dispositivos IoT (FreeRTOS, Zephyr, Mbed OS) |
 
 ## Recursos recomendados
 
-- **Libros**: "Operating Systems: Three Easy Pieces" (Arpaci-Dusseau) — excelente y gratuito online; "Modern Operating Systems" (Tanenbaum); "The Linux Programming Interface" (Kerrisk)
-- **Cursos**: MIT 6.S081 (xv6), Stanford CS140, Udacity: Introduction to Operating Systems
-- **Linux**: kernel.org/doc, "Linux Kernel Development" (Love), The Linux Documentation Project
-- **Herramientas**: VirtualBox / QEMU para experimentar, Vagrant para entornos reproducibles
+- **Libros**: "Operating Systems: Three Easy Pieces" (Arpaci-Dusseau) — mejor libro introductorio gratis online. "Linux Kernel Development" (Love, 3ª ed.). "Understanding the Linux Kernel" (Bovet, Cesati, 3ª ed.). "The Design of the UNIX Operating System" (Bach). "Modern Operating Systems" (Tanenbaum, 5ª ed.).
+- **Cursos**: MIT 6.1810 (xv6), Stanford CS140, Georgia Tech CS6210 (Advanced OS), "Linux Kernel Programming" (linux-kernel-labs).
+- **Práctica**: Implementar xv6 (MIT), contribuir a Linux kernel, escribir módulos kernel, programas eBPF.
+- **Herramientas**: perf, ftrace, eBPF/bcc, strace, ltrace, bpftrace, SystemTap, Valgrind, GDB, QEMU.
+
+## Notas adicionales
+
+Linux es el SO más importante para aprender por su dominio en servidores, cloud, contenedores, embebidos y supercomputación. Se recomienda instalarlo como SO principal o en VM/WSL para práctica diaria. Los conceptos de SO son independientes del SO específico y transferibles entre plataformas. La comprensión profunda de sistemas operativos distingue a un ingeniero de sistemas de un desarrollador de aplicaciones.

@@ -1,76 +1,73 @@
-# Model Context Protocol (036-MCP)
+# 036-MCP: Model Context Protocol
 
-## Descripción del dominio
+## Descripción ampliada del dominio
 
-Model Context Protocol (MCP) es un protocolo abierto estandarizado desarrollado por Anthropic que permite a los LLMs (Large Language Models) interactuar con herramientas, recursos y servicios externos de manera segura y estructurada. MCP define una arquitectura cliente-servidor donde los hosts (aplicaciones como Claude Desktop, IDEs) se conectan a servidores MCP que exponen herramientas (funciones ejecutables), recursos (datos consultables) y prompts (plantillas de instrucciones). El protocolo utiliza JSON-RPC 2.0 como base de comunicación, soportando transporte por stdio (procesos locales) y SSE (Server-Sent Events para conexiones remotas). MCP resuelve el problema de conectar LLMs con datos y sistemas reales, proporcionando un estándar interoperable similar a cómo USB estandarizó la conexión de periféricos.
+Model Context Protocol (MCP) es un protocolo abierto estandarizado que permite a modelos de lenguaje (LLMs) conectarse de manera segura y estructurada con herramientas externas, fuentes de datos y aplicaciones. Desarrollado por Anthropic y anunciado en noviembre de 2024, MCP define una arquitectura cliente-servidor donde el LLM actúa como cliente MCP y las herramientas/datos como servidores MCP. El protocolo incluye: MCP Client (LLM host), MCP Server (tools, resources, prompts), MCP Transport (stdio, SSE, streaming), y MCP Protocol (JSON-RPC 2.0). MCP resuelve el problema de fragmentación de integraciones LLM: antes de MCP, cada framework (LangChain, LlamaIndex, Semantic Kernel) definía sus propios protocolos de herramientas. Con MCP, cualquier servidor MCP compatible funciona con cualquier cliente MCP. Los servidores MCP proveen: Tools (acciones que el LLM puede ejecutar, con schema de entrada/salida), Resources (datos que el LLM puede leer, como archivos, DB queries, APIs), y Prompts (templates de prompt reutilizables). MCP ha sido adoptado por las principales plataformas: Claude Desktop, Cursor IDE, VS Code, Sourcegraph Cody, y frameworks (LangChain, LlamaIndex, Continue.dev, Genkit).
 
-## Conceptos clave
+## Tabla de conceptos clave
 
-- **Host**: Aplicación que inicia la conexión MCP (Claude Desktop, IDE, herramienta CLI). Es el cliente del protocolo.
-- **Client**: Cliente MCP que establece una conexión con un servidor. El host puede gestionar múltiples clientes.
-- **Server**: Servidor MCP que expone capacidades. Puede ser local (stdio) o remoto (SSE).
-- **Tools**: Funciones invocables por el LLM. Tienen nombre, descripción, esquema de entrada (JSON Schema) y ejecutan acciones (leer BD, llamar API, ejecutar código).
-- **Resources**: Datos expuestos por el servidor que el LLM puede leer. Identificados por URI. Pueden ser archivos, documentos, resultados de queries.
-- **Resource Templates**: Patrones URI dinámicos para recursos parametrizables (ej. `file://{path}`).
-- **Prompts**: Plantillas de instrucciones predefinidas que el servidor puede proporcionar al host. Incluyen mensajes y argumentos.
-- **JSON-RPC 2.0**: Protocolo de transporte subyacente. Mensajes request/response/notification con identificadores.
-- **Capabilities**: Habilidades que un servidor declara al conectarse: tools, resources, prompts.
-- **Sampling**: Capacidad opcional del servidor para solicitar al LLM generaciones adicionales, permitiendo servidores que actúan como agentes.
-- **Roots**: Directorios o rutas que el host comparte con el servidor como contexto accesible.
-- **Notifications**: Mensajes asíncronos para cambios de estado (recursos actualizados, cancelaciones).
-- **Progress**: Mecanismo para reportar progreso de operaciones largas mediante tokens de progreso.
+| Concepto | Descripción | Implementación |
+|----------|-------------|---------------|
+| MCP Client | Aplicación/host que se conecta a servidores MCP (Claude Desktop, editor, app) | Claude Desktop, Cursor, VS Code, Continue.dev |
+| MCP Server | Servicio que expone tools, resources y prompts a clientes MCP | anthropic-quickstarts, mcp-servers, custom servers |
+| Tool | Función ejecutable que el LLM puede llamar (con esquema) | Calculator, web search, DB query, file read/write, API call |
+| Resource | Dato que el LLM puede leer (archivo, query result, API response) | File contents, database records, URL content |
+| Prompt | Template de prompt reutilizable con placeholders | Expert persona, task description, role definition |
+| Transport | Canales de comunicación entre cliente y servidor | stdio (subprocess), SSE (Server-Sent Events), HTTP streaming |
+| Protocol | MCP protocolo basado en JSON-RPC 2.0 | initialize, tools/list, tools/call, resources/list, resources/read |
+| Tool Schema | Definición de entrada/salida de herramienta (JSON Schema) | Input: {type: object, properties: {...}} Output: {content: [...]} |
+| MCP Hub | Repositorio de servidores MCP | npm (mcp-server-*), PyPI (mcp-server-*), GitHub |
 
 ## Tecnologías principales
 
-- **SDKs Oficiales**: Python SDK (anthropic/mcp), TypeScript SDK (modelcontextprotocol/typescript-sdk), Java SDK (modelcontextprotocol/java-sdk).
-- **Servidores de Referencia**: filesystem, github, git, fetch, puppeteer, sqlite, brave-search, google-maps, docker, redis.
-- **Claude Desktop**: Host principal de Anthropic con soporte nativo MCP. Configuración via `claude_desktop_config.json`.
-- **MCP Inspector**: Herramienta de depuración y testing para servidores MCP (interfaz web).
-- **VSCode MCP Extension**: Integración con VS Code para usar MCP servers en el editor.
-- **Continue.dev**: IDE open source que integra MCP servers para asistentes de código.
-- **Cline/Claude Dev**: Extensiones de VS Code que soportan MCP servers para navegación, archivos y más.
-- **Ollama + MCP**: Uso de modelos locales con servidores MCP mediante adaptadores.
-- **FastMCP**: Framework simplificado de Python para construir servidores MCP (pip install fastmcp).
+| Categoría | Herramientas/Plataformas | Propósito |
+|-----------|-------------------------|-----------|
+| Clients MCP | Claude Desktop, Cursor IDE, VS Code (Cody, Continue.dev), LangChain, LlamaIndex | Hosts que ejecutan LLMs y se conectan a servers MCP |
+| SDKs MCP | Python SDK (mcp), TypeScript SDK (@modelcontextprotocol/sdk), Go, Java, Rust | Desarrollo de servidores MCP |
+| Servidores Oficiales | Filesystem (acceso a archivos local), SQLite, PostgreSQL, GitHub, Git, Puppeteer | Servidores de referencia de Anthropic |
+| Servidores Comunitarios | Docker, Kubernetes, AWS, GCP, Stripe, Notion, Linear, Jira, Slack, Google Maps | Cientos de servidores open source |
+| MCP en Frameworks | LangChain (LangGraph MCP Agent), LlamaIndex (MCP integration), Continue.dev | Integración en frameworks existentes |
+| MCP Hosting | Cloudflare Workers, AWS Lambda, Railway, Render, Docker | Hosting de servidores MCP |
 
-## Hoja de ruta
+## Hoja de ruta detallada
 
-**Principiante:**
-1. Entender qué es MCP y por qué estandariza la interacción LLM-herramientas.
-2. Configurar Claude Desktop con servidores MCP básicos (filesystem, fetch, sqlite).
-3. Usar MCP Inspector para explorar servidores: listar tools, resources, prompts.
-4. Escribir un servidor MCP simple en Python con una tool (ej. calculadora o clima).
-5. Probar el servidor localmente con Claude Desktop y MCP Inspector.
+1. **Principiante (0-2 semanas)**: Conceptos MCP: qué es Client, Server, Tool, Resource, Prompt. Arquitectura: LLM ↔ MCP Client ↔ MCP Server (stdin/stdout o HTTP). Instalación de Claude Desktop. Configurar servidores MCP básicos: filesystem (acceso a directorio local), SQLite (query base de datos local). Ejemplos: Claude Desktop + Filesystem Server (leer archivos, buscar, contar líneas). Probar Tools: web search, calculator, fetch URL. Probar Resources: leer archivo, query SQL. MCP JSON-RPC: entender mensajes initialize, tools/list, tools/call, resources/list, resources/read. Crear un servidor MCP mínimo con Python SDK: @mcp.tool() decorator, tool with JSON Schema input.
+   - Práctica: Instalar Claude Desktop + examples. Configurar servidor filesystem + SQLite. Crear un servidor MCP personalizado simple (calculator tool).
+   - Lectura: MCP specification (modelcontextprotocol.io/specification), examples/quickstart (github.com/modelcontextprotocol).
 
-**Intermedio:**
-1. Recursos y resource templates: exponer datos estructurados (documentos, configuraciones, queries).
-2. Prompts personalizados: crear plantillas de instrucciones reutilizables en el servidor.
-3. Transporte remoto: configurar servidor MCP con SSE (Server-Sent Events) para acceso remoto.
-4. Manejo de errores, validación de argumentos con JSON Schema, logging.
-5. Integrar MCP con frameworks de agentes: LangChain MCP adapter, LlamaIndex tool integration.
+2. **Intermedio (2-4 semanas)**: Desarrollo de servidores MCP: Python SDK (FastMCP, MCP Server), TypeScript SDK (Server, Transport, Tool). Recursos y Prompts: resources (file://, db://, custom URI schemes), prompts (reusable templates con placeholders y argumentos). Transport options: stdio (subprocess, local), SSE (server-sent events, remoto), streaming (HTTP). Tool design: input schema (required/optional parameters, types), output format (text, image, resource, embedded resource), error handling (MCPError, ToolError). Dynamic tools: tools que se registran dinámicamente según estado. Tool calling: parallel tool calls, nested tool calls, tool selection. Authentication: API keys via args, environment variables. Resource templates: pattern-based URIs (file://{path}, db://{query}). Prompt templates: role, expert capabilities, task-specific. Testing: MCP Inspector (web UI para probar servidores MCP), writing tests with mcp SDK.
+   - Práctica: Servidor MCP con tools + resources + prompts. Servidor MCP SSE para integración remota. Integración con Cursor/VSCode.
+   - Lectura: MCP SDK docs (modelcontextprotocol.io/sdk), MCP Inspector docs, GitHub MCP servers examples.
 
-**Avanzado:**
-1. Sampling: implementar servidores MCP que solicitan generaciones adicionales al LLM.
-2. Servidores compuestos: un servidor que consume otros servidores MCP como dependencias.
-3. Autenticación y seguridad: OAuth, API keys, rate limiting en servidores remotos.
-4. Despliegue de servidores MCP en producción: Docker, Kubernetes, monitoreo.
-5. Contribución al protocolo: propuestas de extensión, nuevos transportes (WebSocket, gRPC), mejoras de rendimiento.
+3. **Avanzado (4-8 semanas)**: Complex tools: streaming tools (result streaming), progress reporting, long-running tools (async, background). Tool chaining: composición de tools (tool que llama a otra tool), stateful tools (mantener estado entre llamadas). Authentication & Authorization: bearer tokens, OAuth, session management, API key rotation. Error recovery: retry logic, timeout handling, idempotent tools, circuit breaker. Resource subscriptions: server → client notifications when resources change (real-time updates). Transport optimization: connection pooling, request batching, caching. Multi-server orchestrator: un cliente MCP que orquesta múltiples servidores, routing requests según tipo. Security: input validation (JSON Schema), rate limiting, permission scoping, content filtering, audit logging. Production deployment: Docker container, Cloudflare Workers, AWS Lambda, Railway. MCP en LangChain/LlamaIndex: LangGraph MCP Agent (MCPAgent), LlamaIndex MCP integration.
+   - Práctica: Servidor MCP con autenticación + rate limiting + audit logging. Multi-server orchestration (routing entre servidores según query). Deploy server en Railway/Cloudflare Workers.
+   - Lectura: MCP security guidelines, LangChain MCP docs, LlamaIndex MCP docs.
+
+4. **Experto (2+ meses, emergente)**: MCP standards contribution: proponer nuevas características (resource templates, streaming, batch operations), MCP extensions for specific domains (MCP for databases, MCP for observability). MCP en herramientas de desarrollo: VS Code extensions que exponen MCP servers (editor actions, code analysis, git operations), CI/CD pipelines con MCP. MCP para agentes: MCP como protocolo unificado de tools para agentes multi-modelo, MCP Agent (LangGraph). MCP for enterprise: enterprise SSO, audit logging (every tool call logged), compliance, SLA monitoring, cost tracking per tool. MCP bridge: conectar LLMs locales (Ollama) con MCP servers. MCP in edge: MCP servers en Cloudflare Workers (edge compute). MCP generative UI: tools que generan UI components, interactive forms. MCP ecosystem: package managers (mcp registry), marketplaces, SDK generators, monitoring (OpenTelemetry + MCP). MCP for RAG: MCP servers como retrievers (vector DB query, hybrid search, reranking), MCP tools for document processing.
+   - Práctica: Contribución a MCP specification o SDK. MCP server marketplace/packaging. MCP-powered agent framework.
+   - Lectura: Anthropic MCP announcements, MCP GitHub issues/discussions, MCP community servers (awesome-mcp-servers).
 
 ## Relaciones con otros módulos
 
-- `../034-LLM/`: LLMs como consumidores del protocolo MCP para acceder a herramientas.
-- `../037-AgenticAI/`: MCP como infraestructura para que agentes ejecuten herramientas.
-- `../077-CLI/`: Servidores MCP vía stdio integrados con herramientas CLI.
-- `../074-Tools/`: Catálogo de herramientas expuestas a través de servidores MCP.
-- `../079-APIs/`: MCP como capo de abstracción sobre APIs REST/GraphQL.
-- `../035-RAG/`: Servidores MCP de recuperación de documentos y búsqueda.
-- `../065-Workflows/`: Orquestación de herramientas MCP en pipelines automatizados.
-- `../064-Agents/`: Implementaciones de agentes que usan MCP para ejecución de acciones.
+| Módulo | Relación |
+|--------|----------|
+| [034-LLM](../034-LLM/) | LLM como cliente MCP principal |
+| [035-RAG](../035-RAG/) | MCP servers pueden exponer retrievers de RAG |
+| [037-AgenticAI](../037-AgenticAI/) | MCP proporciona tools para agentes |
+| [038-VectorDatabases](../038-VectorDatabases/) | MCP server para query a vector databases |
+| [039-PromptEngineering](../039-PromptEngineering/) | MCP prompts como templates reutilizables |
+| [041-CodeGeneration](../041-CodeGeneration/) | MCP tools para code generation y code review |
+| [042-Documentation](../042-Documentation/) | MCP resources para documentación técnica |
 
 ## Recursos recomendados
 
-- **Documentación oficial**: modelcontextprotocol.io — Especificación completa, SDKs, servidores de referencia.
-- **Repositorio**: github.com/modelcontextprotocol — Organización oficial con SDKs y servidores.
-- **Guía**: "MCP Quick Start" (modelcontextprotocol.io/quickstart).
-- **Video**: "Introducing the Model Context Protocol" (Anthropic, 2024).
-- **Repositorio**: "Awesome MCP Servers" (punkpeye/awesome-mcp-servers) en GitHub.
-- **Herramienta**: MCP Inspector — Interfaz de depuración interactiva para servidores MCP.
+- **Documentación oficial**: modelcontextprotocol.io (specification, SDK, quickstart), github.com/modelcontextprotocol (spec + SDK + examples).
+- **Servidores de referencia**: anthropic-quickstarts (modelcontextprotocol/servers GitHub), awesome-mcp-servers (GitHub community collection).
+- **SDKs**: Python (pip install mcp), TypeScript (npm install @modelcontextprotocol/sdk), Go, Java, Kotlin, Rust.
+- **Herramientas**: MCP Inspector (modelcontextprotocol/inspector), MCP CLI tools.
+- **Cursos/Guías**: Anthropic MCP blog posts, YouTube MCP tutorials, MCP Cookbook (community).
+- **Comunidad**: MCP Discord (Anthropic), GitHub discussions, Twitter/X #MCPProtocol.
+
+## Notas adicionales
+
+MCP es un protocolo en desarrollo temprano (anunciado noviembre 2024). La adopción está creciendo rápidamente: Claude Desktop, Cursor, VS Code (Cody, Continue), LangChain, LlamaIndex. MCP es similar a LSP (Language Server Protocol) pero para LLMs. El protocolo es abierto y agnóstico a proveedor. La contribución más valiosa actualmente es construir servidores MCP para herramientas populares y compartirlos open source. Para desarrolladores, el SDK para Python/Typescript permite crear servidores en minutos. El futuro: MCP podría convertirse en el estándar universal para integración LLM, como LSP lo es para editores de código.

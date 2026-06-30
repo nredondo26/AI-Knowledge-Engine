@@ -1,76 +1,77 @@
-# Deep Learning (033-DeepLearning)
+# 033-DeepLearning: Aprendizaje Profundo
 
-## Descripción del dominio
+## Descripción ampliada del dominio
 
-Deep Learning es un subcampo del Machine Learning basado en redes neuronales artificiales con múltiples capas ocultas (profundas). Estas arquitecturas son capaces de aprender representaciones jerárquicas de los datos, desde características simples en capas tempranas hasta conceptos abstractos en capas profundas. El Deep Learning ha revolucionado áreas como visión por computadora (CNNs), procesamiento del lenguaje natural (Transformers), generación de contenido (GANs, Diffusion Models) y aprendizaje por refuerzo. Los frameworks principales son TensorFlow (con Keras) y PyTorch, siendo este último el más popular en investigación. Las arquitecturas clave incluyen CNN (procesamiento espacial), RNN/LSTM (secuencias temporales), Transformers (atención) y modelos generativos.
+Deep Learning (DL) es un subcampo del Machine Learning basado en redes neuronales artificiales con múltiples capas (deep = profundo). Estas redes aprenden representaciones jerárquicas de los datos, transformando entradas crudas (píxeles, audio, texto) en conceptos cada vez más abstractos. El DL ha impulsado avances revolucionarios en visión por computadora, procesamiento de lenguaje natural, reconocimiento de voz, generación de contenido, robótica, diagnóstico médico, descubrimiento de fármacos y conducción autónoma. La arquitectura Transformer (2017, Vaswani) es actualmente la más influyente. La evolución del DL: perceptrón (1958, Rosenblatt) → backpropagation (1986, Rumelhart) → CNN/LSTM (1990s, LeCun, Hochreiter) → AlexNet (2012, Krizhevsky, revolución DL) → GANs (2014, Goodfellow) → ResNet (2015, He) → Transformer (2017, Vaswani) → BERT/GPT (2018) → diffusion models (2020) → GPT-4/Foundation Models (2023). La investigación actual incluye: modelos multimodales, eficiencia en training/inferencia, scaling laws, interpretability, y AI segura.
 
-## Conceptos clave
+## Tabla de conceptos clave
 
-- **Red Neuronal Artificial**: Capas de neuronas con pesos, bias y funciones de activación. Forward propagation y backpropagation.
-- **Funciones de Activación**: ReLU, sigmoide, tanh, softmax, GELU, Swish. No linealidad esencial para aprender patrones complejos.
-- **CNN** (Convolutional Neural Network): Capas convolucionales para extraer características espaciales. Conv2D, pooling (max, average), stride, padding. Arquitecturas: ResNet, VGG, Inception, EfficientNet, YOLO.
-- **RNN** (Recurrent Neural Network): Conexiones recurrentes para procesar secuencias. Sufren de vanishing gradient. LSTM y GRU son variantes con compuertas para controlar flujo de información.
-- **LSTM** (Long Short-Term Memory): Celdas de memoria con forget gate, input gate, output gate. Ideales para series temporales, audio, texto.
-- **Transformers**: Arquitectura basada exclusivamente en atención (self-attention). Sin recurrencia, permite paralelización. Base de BERT, GPT, todos los LLMs modernos.
-- **GANs** (Generative Adversarial Networks): Dos redes (generador y discriminador) compiten. El generador crea datos sintéticos; el discriminador distingue real de falso.
-- **Transfer Learning**: Usar un modelo pre-entrenado como punto de partida para una tarea nueva. Fine-tuning, feature extraction.
-- **Atención (Attention)**: Mecanismo que pondera la importancia de diferentes partes de la entrada. Self-attention, cross-attention, multi-head attention.
-- **Regularización**: Dropout, Batch Normalization, Layer Normalization, weight decay, data augmentation.
-- **Optimización**: SGD, Adam, AdamW, RMSprop, learning rate scheduling (cosine, warmup, ReduceLROnPlateau).
-- **Diffusion Models**: Modelos generativos que aprenden a revertir un proceso de difusión (ruido → dato). Base de DALL-E, Stable Diffusion, Midjourney.
+| Concepto | Descripción | Arquitecturas |
+|----------|-------------|---------------|
+| Red Neuronal | Capas de neuronas interconectadas con pesos y bias | MLP (perceptrón multicapa), Dense (fully connected) |
+| CNN (Convolutional NN) | Capas convolucionales para datos espaciales (imágenes, video) | LeNet, AlexNet, VGG, ResNet, Inception, EfficientNet, ConvNeXt |
+| RNN/LSTM/GRU | Redes recurrentes para datos secuenciales | Vanilla RNN, LSTM, GRU, BiLSTM, seq2seq |
+| Transformer | Arquitectura basada en atención para secuencias | Encoder (BERT), Decoder (GPT), Encoder-Decoder (T5), Vision Transformer |
+| Normalization | Técnicas para estabilizar entrenamiento | BatchNorm, LayerNorm, InstanceNorm, GroupNorm, RMSNorm |
+| Activation | Función no lineal en neuronas | ReLU, GELU, SiLU/Swish, Sigmoid, Tanh, Softmax |
+| Optimization | Algoritmos para minimizar función de pérdida | SGD, SGD+Momentum, Adam, AdamW, AdamW, Lion |
+| Regularization | Técnicas para evitar overfitting | Dropout, DropPath, Weight Decay, Label Smoothing, Stochastic Depth |
+| Attention | Mecanismo que pesa importancia de elementos de entrada | Self-attention, Multi-head attention, Cross-attention, Flash Attention |
+| Embedding | Representación vectorial densa de datos discretos | Word embeddings, positional embeddings, learned embeddings |
+| Loss Function | Función a minimizar durante entrenamiento | Cross-entropy, MSE, MAE, Contrastive loss, Triplet loss |
 
 ## Tecnologías principales
 
-- **PyTorch**: Framework dominante en investigación. Tensores dinámicos, autograd, torch.nn, torchvision, torchaudio, Hugging Face integration.
-- **TensorFlow/Keras**: Framework de Google, ampliamente usado en industria. TFX para pipelines, TFLite para móviles, TensorFlow.js.
-- **JAX**: Librería de Google Research para cómputo numérico acelerado, autograd, XLA. Usado por DeepMind.
-- **Hugging Face Transformers**: Biblioteca estándar para modelos transformer pre-entrenados (BERT, GPT, LLaMA).
-- **ONNX**: Formato interoperable para intercambio de modelos entre frameworks.
-- **CUDA/cuDNN**: Aceleración GPU para deep learning. NVIDIA.
-- **MLflow / Weights & Biases**: Seguimiento de experimentos y versionado de modelos.
-- **Lightning AI / PyTorch Lightning**: Abstracción sobre PyTorch para simplificar entrenamiento.
-- **Horovod / DeepSpeed**: Entrenamiento distribuido y paralelización.
+| Framework | Autograd | Training | Deployment | Ecosystem | Computación distribuida |
+|-----------|----------|----------|------------|-----------|----------------------|
+| PyTorch | Sí (eager, torch.compile) | DDP, FSDP, DeepSpeed, Horovod | TorchServe, ONNX, TorchScript, ExecuTorch | Hugging Face, Lightning, fast.ai | DDP (multi-GPU), FSDP (sharding), TP |
+| TensorFlow/Keras | Sí (GradientTape, eager) | tf.distribute, Horovod, TPU | TF Serving, TF Lite, TF.js | Vertex AI, KerasCV, TensorBoard | Mirrored, multi-worker, TPU strategy |
+| JAX | Sí (grad, vmap, pmap, jit) | Flax, Haiku, Optax, PyTree | PJRT, XLA compilation | Transformers (HF), DeepMind | pmap (multi-device), sharded |
+| ONNX Runtime | — | — | ONNX (cross-framework) | ONNX ops, ONNX-MLIR | ORT (multi-device) |
+| Lightning | PyTorch wrapper | Lightning Trainer, Fabric | Lightning Serve, Lit-Llama | Lightning Hub, Bolts | Lightning DDP/FSDP/DeepSpeed |
+| Hugging Face | PyTorch/TF/JAX | Trainer, Accelerate, TRL | Text Generation Inference, TGI | 200K+ models, datasets, spaces | Accelerate (multi-GPU, TPU) |
 
-## Hoja de ruta
+## Hoja de ruta detallada
 
-**Principiante:**
-1. Perceptrón simple, función de activación, pérdida (MSE, cross-entropy), backpropagation.
-2. Redes densas (MLP) con Keras o PyTorch: capas, optimizadores, entrenamiento.
-3. CNNs básicas: convolución, pooling, arquitectura LeNet-5, clasificación de imágenes.
-4. Regularización: Dropout, Batch Normalization, data augmentation (ImageDataGenerator).
-5. Proyecto: clasificador de dígitos MNIST, clasificación CIFAR-10.
+1. **Principiante (0-3 meses)**: Conceptos fundamentales: neurona artificial (w * x + b), forward pass, backward pass (backpropagation, chain rule). MLP (perceptrón multicapa): layers, units, activation functions (ReLU, sigmoid, tanh, softmax). Training loop: forward, loss, backward (gradients), optimizer step (SGD, Adam). Dataset y DataLoader. PyTorch: Tensor, autograd, nn.Module, nn.Linear, torch.optim, F.mse_loss, F.cross_entropy. Training: batch size, epochs, learning rate, train/validation split. Overfitting/underfitting: dropout, weight decay, early stopping. TensorBoard: logging scalars, histograms, graphs. GPU training: .to(device), CUDA.
+   - Proyecto: MLP para MNIST classification. Simple regression con PyTorch.
+   - Lectura: "Deep Learning with PyTorch" (Stevens), "d2l.ai" (Dive into Deep Learning), PyTorch tutorials.
 
-**Intermedio:**
-1. RNN/LSTM/GRU: procesamiento de secuencias, series temporales, generación de texto.
-2. Transfer Learning: modelos pre-entrenados (ResNet, VGG, EfficientNet), fine-tuning.
-3. Atención: mecanismo de atención básico, seq2seq con atención.
-4. GANs básicas: DCGAN, entrenamiento estable, pérdidas (BCE, Wasserstein).
-5. Optimización avanzada: AdamW, cosine annealing, warmup, gradient clipping.
+2. **Intermedio (3-8 meses)**: CNNs: convolutional layer (kernel size, stride, padding, dilation), pooling (max, avg, global avg), channels. CNN architectures: LeNet, AlexNet, VGG (importance of depth), ResNet (skip connections, bottleneck blocks), Batch Normalization, Global Average Pooling. Training tricks: learning rate scheduling (StepLR, CosineAnnealing, OneCycle), gradient clipping, weight initialization (He, Xavier), augmentation (RandomCrop, HorizontalFlip, ColorJitter, CutMix, MixUp). Transfer learning: pre-trained models (ImageNet), fine-tuning, feature extraction, progressive unfreezing. RNNs: sequence modeling, vanishing/exploding gradients, LSTM (forget, input, output gates), GRU. Training RNNs: truncated BPTT, packed sequences. Embeddings: word embeddings, embedding layer. Seq2seq: encoder-decoder, teacher forcing. Attention: Bahdanau (additive), Luong (multiplicative). PyTorch Lightning: Trainer, Module, DataModule, Callbacks. Multi-GPU: DataParallel, DistributedDataParallel.
+   - Proyecto: Image classifier with ResNet transfer learning (cats vs dogs, CIFAR-100). Text classifier with LSTM/GRU. Neural machine translation (seq2seq + attention).
+   - Certificación: PyTorch Certified (no oficial, cursos DeepLearning.AI).
+   - Lectura: "Dive into Deep Learning" (Zhang, Lipton, Li, Smola) — mejor recurso interactivo, "Deep Learning with PyTorch" (Stevens).
 
-**Avanzado:**
-1. Transformers: self-attention, multi-head attention, positional encoding. Implementar desde cero.
-2. Modelos generativos: Diffusion Models (DDPM, DDIM), VAE, flow-based models.
-3. Entrenamiento distribuido: DDP (Distributed Data Parallel), FSDP (Fully Sharded Data Parallel).
-4. Custom architectures: Swin Transformer, ConvNeXt, ViT (Vision Transformer).
-5. Investigación: lectura de papers (NeurIPS, ICML, ICLR), reproducción de experimentos, contribuciones a frameworks.
+3. **Avanzado (8-14 meses)**: Transformers: attention mechanism (scaled dot-product, self-attention, multi-head, cross-attention), positional encoding (sinusoidal, learned, RoPE). BERT: Masked Language Model (MLM), Next Sentence Prediction (NSP), pre-training + fine-tuning. GPT: causal language model, autoregressive decoding, temperature/top-k/top-p sampling, beam search, KV caching. Vision Transformers (ViT): patch embedding, CLS token, position embeddings. ViT variants: DEiT, Swin Transformer, MaxViT. Multi-modal: CLIP (contrastive vision-language), DALL-E (text-to-image via VQ-VAE + autoregressive), Stable Diffusion (latent diffusion + cross-attention). GANs: generator + discriminator, adversarial training, DCGAN, conditional GAN (pix2pix, cGAN), StyleGAN, CycleGAN. Diffusion models: forward diffusion (noise schedule), reverse diffusion (UNet + noise prediction), DDPM, DDIM, CFG (classifier-free guidance). VAEs: encoder → latent → decoder, KL divergence, reparameterization trick, VQ-VAE. Normalizing flows: invertible transformations, exact likelihood. Training large models: mixed precision (AMP), gradient accumulation, gradient checkpoint, batch size scaling. Advanced optimization: AdamW, cosine schedule, warmup, linear decay.
+   - Proyecto: ViT from scratch for image classification. Fine-tune BERT for text classification/SQuAD. Train a diffusion model for image generation (simple dataset). Fine-tune Stable Diffusion (LoRA).
+   - Lectura: "Deep Learning" (Goodfellow, Bengio, Courville), "The Annotated Transformer" (Harvard NLP), papers: "Attention is All You Need".
+
+4. **Experto (12+ meses)**: Large-scale training: FSDP (Fully Sharded Data Parallel), DeepSpeed (ZeRO stages 1,2,3, offload), Megatron-LM (model parallelism), Tensor Parallelism, Pipeline Parallelism (GPipe, PipeDream). Efficient attention: Flash Attention (tiling, recomputation), Flash Attention 2/3, multi-query attention, grouped-query attention, sliding window attention, sparse attention. Model optimization: quantization (GPTQ, AWQ, GGUF), pruning (magnitude, SparseGPT, Wanda), distillation (logit matching, feature matching), speculative decoding (assisted generation). MoE (Mixture of Experts): sparse MoE, top-k routing, expert balancing, load balancing loss (Switch Transformer, Mixtral). Scaling laws: Chinchilla scaling (compute-optimal), Kaplan scaling, scaling of MoE, Data scaling. Interpretability: mechanistic interpretability, sparse autoencoders (SAE), activation patching, circuit analysis (IOI, docstring), logit lens, tuned lens, probing. xAI/interpretability: attention visualization (BertViz, TransformerLens), Grad-CAM (CNNs), integrated gradients, SHAP. Expert training techniques: FP8 training, distributed checkpointing, curriculum learning, sequence parallelism, memory-efficient optimizers (Adafactor, 8-bit Adam). Advanced architectures: Mamba (state space models), RWKV (RNN-like Transformer), Hyena, liquid neural networks, Kolmogorov-Arnold Networks (KANs). Research frontiers: reasoning in transformers (chain-of-thought, code pre-training), multi-modal training, world models, agentic capabilities, safety alignment.
+   - Proyecto: Training a small LLM (1B param) from scratch. Implementing Flash Attention in Triton. Mechanistic interpretability of a small transformer. Efficient fine-tuning (LoRA, QLoRA) of 7B+ model.
+   - Lectura: ArXiv (NLP, CV, ML), Karpathy's "Let's build GPT from scratch", Megatron-LM, DeepSpeed docs, Hugging Face blog.
 
 ## Relaciones con otros módulos
 
-- `../032-MachineLearning/`: Conceptos base de ML aplicados a redes profundas.
-- `../034-LLM/`: Transformers como arquitectura fundamental de los LLMs.
-- `../035-RAG/`: Embeddings y modelos de recuperación basados en deep learning.
-- `../037-AgenticAI/`: Modelos de deep learning como cerebro de agentes autónomos.
-- `../038-VectorDatabases/`: Embeddings generados por redes neuronales.
-- `../039-PromptEngineering/`: Prompts optimizados para modelos transformer.
-- `../031-AI/`: Deep Learning como motor principal de la IA moderna.
-- `../082-Datasets/`: Datasets etiquetados para entrenamiento de modelos profundos.
+| Módulo | Relación |
+|--------|----------|
+| [000-Core](../000-Core/) | Álgebra lineal, cálculo, optimización, probabilidad |
+| [001-Languages](../001-Languages/) | Python (principal), CUDA C++ para kernels, Triton |
+| [031-AI](../031-AI/) | DL como técnica principal de IA moderna |
+| [032-MachineLearning](../032-MachineLearning/) | DL como subcampo de ML, conceptos de ML aplicados |
+| [034-LLM](../034-LLM/) | LLMs basados en arquitectura Transformer |
+| [035-RAG](../035-RAG/) | Embeddings y generadores basados en DL |
+| [038-VectorDatabases](../038-VectorDatabases/) | Embeddings generados por modelos DL |
+| [030-Robotics](../030-Robotics/) | Deep RL, visión para robótica |
+| [039-PromptEngineering](../039-PromptEngineering/) | Prompting depende de arquitectura del modelo |
 
 ## Recursos recomendados
 
-- **Libro**: "Deep Learning" (Goodfellow, Bengio, Courville) — El libro de referencia académico.
-- **Libro**: "Deep Learning with Python" (François Chollet) — Práctico con Keras.
-- **Curso**: "CS231n: Convolutional Neural Networks for Visual Recognition" (Stanford).
-- **Curso**: "CS224n: Natural Language Processing with Deep Learning" (Stanford).
-- **Paper**: "Attention Is All You Need" (Vaswani et al., 2017) — El transformer original.
-- **Paper**: "Deep Residual Learning for Image Recognition" (He et al., 2015) — ResNet.
-- **Repositorio**: pytorch/examples, tensorflow/models, awesome-deep-learning (GitHub).
+- **Libros**: "Deep Learning" (Goodfellow, Bengio, Courville — gratis online), "Dive into Deep Learning" (Zhang, Lipton, Li, Smola — interactivo), "Deep Learning with PyTorch" (Stevens, Antiga, Viehmann), "Understanding Deep Learning" (Prince).
+- **Cursos**: Stanford CS231n (CNN for Visual Recognition), Stanford CS224n (NLP with Deep Learning), Stanford CS330 (Multi-Task/Meta Learning), Fast.ai "Practical Deep Learning for Coders", Hugging Face "Deep Reinforcement Learning", MIT 6.S191.
+- **Papers**: "AlexNet" (Krizhevsky), "ResNet" (He), "GAN" (Goodfellow), "Attention is All You Need" (Vaswani), "BERT" (Devlin), "GPT-3" (Brown), "Stable Diffusion" (Rombach), "FlashAttention" (Dao).
+- **Herramientas**: PyTorch, JAX, Hugging Face Transformers, lightning.ai, Weights & Biases, Comet, Neptune, gradio (demo apps).
+- **Práctica**: Papers with Code (benchmarks + code), Hugging Face Hub (models + datasets), Kaggle competitions.
+
+## Notas adicionales
+
+PyTorch es el framework dominante en investigación y la opción recomendada para aprender. Hugging Face Transformers es la biblioteca más importante para trabajar con modelos pre-entrenados. El Transformer es la arquitectura más importante de la década, fundamental para LLMs, visión y más allá. Los conceptos de atención, normalización, y optimización son comunes a todas las arquitecturas. La escalabilidad de entrenamiento (FSDP, DeepSpeed, FlashAttention) es la habilidad más demandada en DL avanzado. La interpretabilidad mecanicista es el campo más activo para entender qué aprenden las redes. Mantenerse al día es esencial: DL avanza rápidamente — seguir ArXiv Sanity, Hugging Face y Twitter/X de investigadores clave.

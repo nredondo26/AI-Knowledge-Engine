@@ -1,56 +1,79 @@
-# 016-RPA (Robotic Process Automation)
+# 016-RPA: Robotic Process Automation
 
-## Descripción del dominio
+## Descripción ampliada del dominio
 
-La Automatización Robótica de Procesos (RPA) es una tecnología que permite crear software robots (bots) que imitan las acciones humanas al interactuar con aplicaciones y sistemas informáticos a través de sus interfaces de usuario. A diferencia de la automatización tradicional basada en APIs, RPA opera en la capa de presentación, simulando clics, escritura y navegación como lo haría un operador humano. Es especialmente útil para automatizar procesos manuales, repetitivos y basados en reglas en sistemas legacy sin APIs expuestas. Las plataformas líderes incluyen UiPath, Automation Anywhere, Blue Prism y Microsoft Power Automate.
+La Automatización Robótica de Procesos (RPA) es una tecnología que utiliza software robótico (bots) para imitar las acciones humanas en sistemas digitales, automatizando tareas repetitivas, basadas en reglas y de alto volumen que antes requerían intervención humana. RPA interactúa con aplicaciones a través de la interfaz de usuario (UI automation), o mediante APIs e integraciones técnicas. A diferencia de la automatización tradicional de TI (que requiere integraciones técnicas programáticas), RPA opera sobre las mismas interfaces que los humanos: pantalla, teclado, mouse, archivos, correo electrónico. Las plataformas RPA líderes son UiPath, Automation Anywhere y Microsoft Power Automate. La evolución ha sido: RPA asistido (attended bots que colaboran con humanos, 2010s) → RPA no asistido (unattended bots que ejecutan sin supervisión, 2015+) → Hyperautomation (combinación de RPA + AI + ML + procesos, 2020+), → Process Mining + RPA + AI (intelligent automation, 2023+). RPA no reemplaza APIs ni integraciones técnicas; es una solución para sistemas sin API o cuando la integración técnica es demasiado costosa. El mercado RPA ha crecido explosivamente: se estima en $13B+ para 2025.
 
-## Conceptos clave
+## Tabla de conceptos clave
 
-- **Bot**: agente de software que ejecuta procesos automatizados, ya sea atendido (asiste al usuario) o no atendido (se ejecuta en segundo plano sin supervisión).
-- **Selector**: mecanismo para identificar elementos en la interfaz de usuario (por propiedades como ID, clase, texto, posición relativa). Los selectores robustos son clave para la estabilidad del bot.
-- **Orquestador**: plataforma central que gestiona, monitorea, programa y coordina la ejecución de múltiples bots en diferentes máquinas o entornos.
-- **Grabador (recorder)**: herramienta que captura las acciones del usuario (clics, escritura, navegación) y genera automáticamente los pasos del flujo de trabajo, que luego pueden refinarse manualmente.
-- **Proceso estructurado vs. no estructurado**: los bots RPA son más efectivos en procesos estructurados (basados en reglas, datos predecibles); para procesos no estructurados (documentos, imágenes) se combina con OCR e IA.
-- **Attended Automation**: bots que se ejecutan en el mismo escritorio que el usuario, generalmente activados por el usuario para asistir en tareas específicas.
-- **Unattended Automation**: bots que se ejecutan en servidores o máquinas virtuales sin intervención humana, programados o disparados por eventos.
-- **Centro de Excelencia (CoE) RPA**: equipo multidisciplinario que define estándares, selecciona herramientas, capacita y gobierna la automatización en una organización.
-- **Excepción y manejo de errores**: los bots deben manejar casos excepcionales (ventanas emergentes inesperadas, cambios de interfaz, tiempos de espera) para ser robustos en producción.
-- **OCR e IA**: tecnologías complementarias que permiten a los RPA leer y procesar documentos no digitalizados (facturas, formularios) mediante reconocimiento óptico de caracteres y modelos de IA.
+| Concepto | Descripción | Herramientas/Estándares |
+|----------|-------------|------------------------|
+| Unattended Bot | Bot que ejecuta sin intervención humana en servidores | UiPath Robot, Automation Anywhere Bot Runner |
+| Attended Bot | Bot que asiste al usuario en su estación de trabajo | UiPath Assistant, Power Automate Desktop |
+| Orchestrator | Plataforma central que gestiona, monitorea y programa bots | UiPath Orchestrator, AA Control Room |
+| UI Automation | Interacción con aplicaciones a través de su interfaz gráfica | Selectores (UI elements), image recognition, OCR |
+| Screen Scraping | Extracción de datos de pantallas de aplicaciones | OCR (Tesseract), native scraping, image scraping |
+| OCR (Optical Character Recognition) | Reconocimiento de texto en imágenes y documentos | UiPath Document Understanding, ABBYY FlexiCapture |
+| Attended Automation | Bot que comparte escritorio con humano, activado manualmente | Procesos que requieren decisión humana intermedia |
+| Unattended Automation | Bot que ejecuta automáticamente en background | Procesos batch 24/7 sin supervisión |
+| Process Mining | Descubrimiento y análisis de procesos basado en logs de eventos | Celonis, UiPath Process Mining, Apromore |
+| Task Mining | Grabación de acciones de usuario para identificar tareas automatizables | UiPath Task Capture, FortressIQ |
+| Centro de Excelencia (CoE) | Equipo central que define estándares, governance y mejores prácticas RPA | Roles: RPA Developer, Architect, Business Analyst |
+| Hyperautomation | Combinación de RPA + AI/ML + BPM + Low-Code para automatización integral | Gartner términos, plataformas low-code + RPA |
 
 ## Tecnologías principales
 
-- **Plataformas RPA**: UiPath (líder del mercado), Automation Anywhere, Blue Prism, Microsoft Power Automate, WorkFusion, NICE, Kofax, EdgeVerve.
-- **Orquestadores**: UiPath Orchestrator, Automation Anywhere Control Room, Blue Prism Enterprise Control Room.
-- **Complementos**: OCR (Tesseract, ABBYY, Google Vision), procesamiento de documentos (Document Understanding de UiPath), AI Center (UiPath), IQ Bot (Automation Anywhere).
-- **Integración**: conectores para SAP, Salesforce, Microsoft Office (Excel, Outlook, SharePoint), bases de datos, APIs REST, servicios web.
-- **Citizen Developer**: Power Automate permite a usuarios de negocio crear automatizaciones sin código profundo.
+| Plataforma | Fundador | Licencia | Lenguaje scripting | Orquestador | AI integrada | Puesto Gartner MQ 2024 |
+|------------|----------|----------|-------------------|-------------|-------------|----------------------|
+| UiPath | Daniel Dines (Romania) | Enterprise/Community | VB.NET (workflows gráficos) | UiPath Orchestrator | AI Center, Document Understanding, Computer Vision | #1 Líder |
+| Automation Anywhere | Mihir Shukla (USA) | Enterprise | BotScript | Control Room | AARI, IQ Bot, Document Automation | #2 Líder |
+| Microsoft Power Automate | Microsoft | Enterprise/Per-user | Power Fx (low-code) | Power Platform Admin Center | AI Builder, Copilot | #3 Líder |
+| Blue Prism | Enterprise (UK) | Enterprise | Blue Prism Object Studio | Blue Prism Hub | Decipher (IDP), Blue Prism AI | Adquirido por SS&C |
+| NICE | Enterprise | Enterprise | NEVA (scripting) | NICE Robotic Automation | NEVA AI | Visionario |
+| WorkFusion | Enterprise | Enterprise | WorkFusion RPA Express | WorkFusion Control Tower | AI Studio, Smart Automation | Visionario |
 
-## Hoja de ruta
+## Hoja de ruta detallada
 
-1. **Principiante**: entender qué es RPA y en qué se diferencia de la automatización tradicional; aprender la interfaz de UiPath o Power Automate; crear bots simples con grabador (recorder) para automatizar tareas en Excel o un navegador web.
-2. **Intermedio**: diseñar selectores robustos y manejar excepciones; utilizar variables, argumentos y control de flujo (condicionales, bucles); trabajar con DataTables y manipulación de archivos; integrar bots con Outlook, bases de datos y APIs REST usando UiPath Studio.
-3. **Avanzado**: implementar procesos de unattended automation gestionados desde Orchestrator; desplegar bots en entornos de producción con queues, assets y schedules; usar Document Understanding y AI Center para procesar documentos no estructurados; aplicar logging y monitoreo de rendimiento.
-4. **Experto**: diseñar una arquitectura RPA empresarial con múltiples entornos, alta disponibilidad y disaster recovery; establecer un CoE RPA con métricas de ROI, governance y compliance; combinar RPA con chatbots y automatización de procesos inteligentes (IPA); evaluar y seleccionar entre RPA, APIs nativas y automatización tradicional para cada caso de uso.
+1. **Principiante (0-2 meses)**: Conceptos RPA: qué es RPA, diferencia con automatización tradicional (API vs UI), cuándo usar RPA (sistemas sin API, procesos legacy, multi-sistema), cuándo no (procesos con alto juicio humano, APIs disponibles). Arquitectura RPA: Developer, Robot (Attended/Unattended), Orchestrator (control room). Instalación de UiPath Studio Community. Primeros pasos: grabar y reproducir acciones (Record → Playback). Actividades básicas: Type Into, Click, Get Text, Scrape, Selector editing. Variables y tipos de datos (String, Int, Boolean, Array, DataTable). Control flow: If/Else, Switch, For Each, While, Do While. Data manipulation: DataTable operations, Collection handling. Excel automation: Read Range, Write Range, Append Range, Workbook operations. Introducción a selectores: selectores de UI (atributos: name, role, control type), selectores parciales, wildcards (asterisk).
+   - Proyecto: Bot de automatización de login a una web y extracción de datos a Excel.
+   - Certificación: UiPath RPA Associate (UiARD) — examen gratuito con voucher. Microsoft PL-900 (Power Platform).
+   - Lectura: UiPath Academy (academy.uipath.com), "Learning Robotic Process Automation" (Tripathi).
+
+2. **Intermedio (2-6 meses)**: Selectores avanzados: selectores dinámicos (variables en selectores), wildcards, anclas (anchor base), fuzzy selectors, selectores para aplicaciones web, desktop y Java (AA, SAP, Citrix). Manejo de errores: Try/Catch/Finally, ContinueOnError, Timeout, Error logging, Retry Scope. Buena práctica: implementar logging estructurado, manejar excepciones específicas (ElementNotFound, ApplicationException). Excel/DataTable avanzado: filtrado, ordenamiento, operaciones con DataTables, Merge DataTable, Lookup DataTable. PDF automation: Read PDF, PDF extraction, Fill PDF Form. Email automation: Outlook, SMTP, IMAP — leer correos, extraer attachments, enviar correos con templates. Orchestrator: publish processes, crear environments, robots, queues, assets, triggers. Orchestrator Triggers: Time trigger, Queue trigger, System event trigger (file creation, email arrival). Queues: Transaction Items, process queued items con Queue Transaction activities, item states (New, InProgress, Failed, Successful, Retry). Assets: credenciales, configuraciones globales, strings, integers, booleanos. Reframework: UiPath ReFramework template (State Machine-based: Initialization → Get Transaction Data → Process → End Process). Orchestrator logging: serilog integration, log levels. SAP automation: SAP GUI Scripting + UiPath SAP Integration.
+   - Proyecto: Bot unattended que procesa facturas desde email → extrae datos → escribe en Excel → sube a ERP. Con estado, queues y logging.
+   - Certificación: UiPath RPA Developer Advanced (UiARD avanzado). Automation Anywhere Advanced RPA Professional.
+   - Lectura: UiPath Documentation, "UiPath: The Complete Guide" (Gupta).
+
+3. **Avanzado (6-12 meses)**: Document Understanding: UiPath Document Understanding framework — Taxonomy Manager, Digitization (OCR: Google Vision, Microsoft Read, Tesseract), Classification (ML Classifier, Taxonomy Classifier), Extraction (Data Extraction Scope, Regex, ML Extractor). Validation station y human-in-the-loop para documentos complejos. Computer Vision: UiPath Computer Vision (object detection, screen scraping con CV), OCR vs CV overhead. AI Center: ML Skills deployment (pre-built: Invoice, Receipt, Resume, Custom ML models), ML Skill integration in workflows. Automation as a Service: Api First RPA (triggers via REST API), Orchestrator API (automate process management). Performance optimization: timing, parallel execution, optimization of large loops, minimizing UI interactions. Testing and debugging: UiPath Test Suite, Test Automation, Test Data Queue, CI/CD integration (Azure DevOps, GitHub Actions). RPA Governance: CoE (Center of Excellence), RPA metrics (bots running, success rate, ROI), change management, version control (Git integration in UiPath Studio), code review process. Process Mining: Celonis/UiPath Process Mining — descubrir procesos reales desde event logs, identificar cuellos de botella y oportunidades de automatización. AARI (Action Center): attended automation triggers from web/mobile interface. Integración con sistemas enterprise: SAP (BAPI, RFC), Salesforce, Oracle, ServiceNow.
+   - Proyecto: Document Understanding pipeline para facturas/contratos. AI Center custom model para clasificación de tickets. Governance framework + CI/CD para RPA.
+   - Certificación: UiPath Document Understanding + AI Center Specialist, Automation Anywhere Master RPA Professional.
+
+4. **Experto (12+ meses)**: Hyperautomation: combinación de RPA + AI/ML + BPM + Low-Code + Process Mining. Arquitectura de plataforma de automatización integral. RPA + LLM: integración de LLMs (GPT-4, Claude) para procesamiento de documentos no estructurados, toma de decisiones basada en lenguaje natural, automatización de procesos cognitivos. Intelligent Document Processing (IDP) avanzado: LLM-based extraction (prompting con few-shot), multi-modal RPA. RPA at scale: federated robot management, multi-tenant Orchestrators, high availability, disaster recovery. Automation mesh: orquestación cross-platform (UiPath + AA + Power Automate en misma empresa). Seguridad: credential management (CyberArk, Vault), secure execution, encryption, audit trails, compliance (SOC 2, SOX). Cost optimization: unattended vs attended economics, CoE staffing models, automation accounting. Emerging technologies: process orchestration, task mining + process mining → continuous discovery → continuous automation.
+   - Proyecto: Hyperautomation platform con RPA + AI/ML + Process Mining + IDP. Integration con LLMs para cognitive automation.
+   - Lectura: Gartner Magic Quadrant for RPA, "Hyperautomation" (Boulton), UiPath Forum blogs.
 
 ## Relaciones con otros módulos
 
-- [010-Architecture](../010-Architecture/) — la arquitectura de un centro RPA incluye bots, orquestador, repositorios y entornos; se integra con sistemas legacy que pueden carecer de APIs modernas.
-- [011-DesignPatterns](../011-DesignPatterns/) — patrones como Template Method (workflows reutilizables), Strategy (múltiples selectores), Facade (simplificar interacción con APIs complejas) y State Machine (gestión de estados del bot).
-- [012-Testing](../012-Testing/) — es fundamental probar los bots: pruebas unitarias de componentes, pruebas de integración con sistemas de destino y pruebas de regresión ante cambios de interfaz.
-- [013-DevOps](../013-DevOps/) — los bots requieren control de versiones, pipelines de despliegue (UiPath tiene CI/CD con GitHub Actions) y monitoreo en producción.
-- [014-CICD](../014-CICD/) — los paquetes de automatización (NuGet en UiPath, .aipkg en AA) se versionan y despliegan mediante pipelines.
-- [015-Automation](../015-Automation/) — RPA complementa la automatización tradicional (scripts, Ansible) automatizando lo que no tiene API; la automatización general y RPA coexisten en un ecosistema.
-- [017-MFT](../017-MFT/) — los bots RPA pueden procesar archivos recibidos mediante MFT (facturas, órdenes de compra) y automatizar su incorporación a sistemas transaccionales.
-- [018-ERP](../018-ERP/) — RPA se usa extensamente para automatizar entradas en SAP, Oracle y ERPs legacy sin APIs modernas.
-- [019-CRM](../019-CRM/) — los bots RPA automatizan la creación de contactos, cuentas, oportunidades y tareas repetitivas en CRMs.
+| Módulo | Relación |
+|--------|----------|
+| [003-Databases](../003-Databases/) | Extracción desde DB legacy, CRM, ERP para automation |
+| [005-Cloud](../005-Cloud/) | RPA en cloud (Automation Cloud, Azure Automation) |
+| [009-Security](../009-Security/) | Credential management, secure automation, compliance |
+| [013-DevOps](../013-DevOps/) | CI/CD para RPA, version control, testing |
+| [015-Automation](../015-Automation/) | RPA como extensión de automation toolkit |
+| [017-MFT](../017-MFT/) | Transferencia de archivos como parte de procesos RPA |
+| [018-ERP](../018-ERP/) | Automatización de procesos en ERP (SAP, Oracle) |
+| [019-CRM](../019-CRM/) | Automatización de procesos de CRM (Salesforce, Dynamics) |
+| [031-AI](../031-AI/) | AI + RPA = cognitive automation, IA/ML en IDP |
 
 ## Recursos recomendados
 
-- *UiPath Official Documentation* — docs.uipath.com
-- *Automation Anywhere University* — automationanywhere.com/university
-- *Blue Prism Documentation* — portal.blueprism.com
-- *Learning Robotic Process Automation* — Packt Publishing
-- *Robotic Process Automation: The Future of Business* — Aditya Tandon
-- *The Robotic Process Automation Handbook* — Tom Taulli
-- *Power Automate Documentation* — learn.microsoft.com/power-automate
-- *UiPath StudioX: Citizen Developer Guide* — UiPath Academy
+- **Plataformas de aprendizaje**: UiPath Academy (academy.uipath.com), Automation Anywhere University, Microsoft Learn (Power Automate modules).
+- **Libros**: "Learning Robotic Process Automation" (Tripathi), "Robotic Process Automation and Automation Anywhere" (Singh), "An Introduction to Robotic Process Automation" (Taulli).
+- **Certificaciones**: UiPath Certified Professional (UiARD, UiARD Advanced, UiPath Document Understanding), Automation Anywhere Certified Master RPA, Microsoft PL-900 + PL-500.
+- **Comunidad**: UiPath Community Forum, UiPath Go!, Automation Anywhere Community, Reddit r/rpa.
+- **Herramientas**: UiPath Studio + Orchestrator, Process Mining (Celonis, UiPath), Task Capture, Document Understanding.
+
+## Notas adicionales
+
+RPA es una tecnología de transición: cuando un sistema legacy sea reemplazado, el RPA asociado debe migrarse o eliminarse. El ROI de RPA depende de la escala y la correcta selección de procesos. Los procesos ideales son: repetitivos, basados en reglas, con entradas digitales estructuradas, de alto volumen, y estables (no cambian frecuentemente). La combinación de RPA + AI (Hyperautomation) es la tendencia principal. Process Mining complementa RPA descubriendo qué procesos automatizar. UiPath es el líder indiscutible del mercado con la plataforma más completa; Power Automate es la mejor integración con Microsoft 365.

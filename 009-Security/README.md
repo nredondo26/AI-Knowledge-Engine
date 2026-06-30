@@ -1,61 +1,93 @@
-# 009-Security: Seguridad
+# 009-Security: Seguridad Informática
 
-## Descripción del dominio
+## Descripción ampliada del dominio
 
-La seguridad informática (ciberseguridad) abarca las prácticas, tecnologías y procesos diseñados para proteger sistemas, redes, datos y aplicaciones de accesos no autorizados, ataques, daños o riesgos. Este módulo cubre seguridad a nivel de aplicación web (OWASP Top 10), criptografía, autenticación y autorización (OAuth 2.0, OpenID Connect, SAML, SSO), seguridad en infraestructura (firewalls, IDS/IPS, SIEM), Zero Trust, seguridad en la nube (IAM, KMS, WAF, Shield), gestión de identidades, DevSecOps, cumplimiento normativo (GDPR, HIPAA, PCI-DSS, SOC 2) y seguridad en contenedores/Kubernetes.
+La seguridad informática protege sistemas, redes y datos contra amenazas internas y externas mediante controles técnicos, organizativos y legales. Este módulo cubre seguridad ofensiva y defensiva, criptografía, seguridad en aplicaciones, redes, cloud, identidad, cumplimiento normativo y mejores prácticas. El panorama de amenazas evoluciona constantemente: desde virus y gusanos clásicos (1980s-90s), pasando por malware avanzado (Stuxnet, 2010), ransomware moderno (WannaCry, 2017; Colonial Pipeline, 2021), ataques a la cadena de suministro (SolarWinds, 2020; Log4j, 2021), hasta APT (Advanced Persistent Threats) patrocinados por estados. Las tendencias actuales incluyen Zero Trust Architecture ("never trust, always verify"), SASE (Secure Access Service Edge), SSE (Security Service Edge), XDR (Extended Detection and Response), SOAR (Security Orchestration Automation and Response), y Security as Code (Policy as Code). La ciberseguridad es un campo multidisciplinario que combina tecnología, procesos y personas. El marco NIST Cybersecurity Framework (CSF) y ISO 27001 son los estándares de referencia para programas de seguridad empresarial.
 
-## Conceptos clave
+## Tabla de conceptos clave
 
-- **OWASP Top 10 2021**: Broken Access Control, Cryptographic Failures, Injection (SQL, NoSQL, OS, LDAP), Insecure Design, Security Misconfiguration, Vulnerable & Outdated Components, Identification & Authentication Failures, Software & Data Integrity Failures, Security Logging & Monitoring Failures, SSRF (Server-Side Request Forgery)
-- **Criptografía simétrica**: AES (AES-128, AES-256, modos GCM, CBC, CTR), ChaCha20, 3DES (obsoleto); cifrado de flujo vs bloque; IV/nonce
-- **Criptografía asimétrica (PKI)**: RSA (2048/4096 bits), ECC (Curva Elíptica — ECDSA, Ed25519), Diffie-Hellman (DH, ECDH) para intercambio de claves; TLS/SSL handshake
-- **Hashing y HMAC**: SHA-2 (256/512), SHA-3, BLAKE2, bcrypt/scrypt/argon2 (para contraseñas), PBKDF2; HMAC para integridad con clave
-- **Autenticación**: Factores (algo que sabes, tienes, eres); MFA/2FA (TOTP, HOTP, SMS, push, U2F/FIDO2/WebAuthn, passkeys); Single Sign-On (SSO)
-- **Autorización**: OAuth 2.0 (flujos: authorization code, PKCE, client credentials, implicit), OpenID Connect (OIDC), SAML 2.0; RBAC (Role-Based), ABAC (Attribute-Based), ReBAC (Relationship-Based)
-- **Zero Trust**: NIST SP 800-207 — nunca confiar, siempre verificar; microsegmentación, beyondcorp/identity-aware proxy, policy enforcement point (PEP), continuous verification
-- **Seguridad en APIs**: Rate limiting, API keys, JWT (JSON Web Tokens), OAuth 2.0 scopes, input validation, Content-Type validation, CORS hardening
-- **Seguridad en la nube**: IAM policies (least privilege), KMS (Key Management Service), Secrets Manager, WAF, Shield (DDoS), GuardDuty (threat detection), CloudTrail (audit), Security Hub (posture management)
-- **Seguridad en contenedores/K8s**: PodSecurityStandards, NetworkPolicies, seccomp, AppArmor, SELinux, Falco (runtime security), Trivy (vulnerabilidades), OPA/Gatekeeper (policy as code), Kyverno, pod security context, user namespaces
-- **DevSecOps**: Security as Code — SAST (SonarQube, Semgrep, Checkmarx), DAST (OWASP ZAP, Burp Suite), SCA (Snyk, Dependabot, Trivy, Syft), secret scanning (git-secrets, truffleHog, Gitleaks), container scanning
-- **Cumplimiento y normativas**: GDPR (protección de datos, derecho al olvido, consentimiento), HIPAA (datos de salud), PCI-DSS (datos de tarjetas de crédito), SOC 2 (controles de seguridad), ISO 27001/27002 (SGSI), NIST CSF, CMMC
-- **Seguridad en redes**: Firewalls (iptables/nftables, cloud security groups/NACL), IDS/IPS (Snort, Suricata), VPN (WireGuard, IPsec, OpenVPN), DDoS mitigation (Cloudflare, AWS Shield), WAF (ModSecurity, AWS WAF, Cloudflare WAF)
+| Concepto | Descripción | Ejemplos/Estándares |
+|----------|-------------|---------------------|
+| Criptografía simétrica | Misma clave para cifrar y descifrar | AES (256), ChaCha20, 3DES (obsoleto) |
+| Criptografía asimétrica | Par de claves pública y privada | RSA (2048-4096), ECC (P-256, P-384), Ed25519 |
+| Hashing | Función unidireccional para integridad | SHA-256, SHA-3, BLAKE2, bcrypt, argon2 |
+| PKI | Infraestructura de clave pública: certificados X.509 | Let's Encrypt, Entrust, DigiCert, mTLS |
+| Autenticación | Verificación de identidad | Passwords, MFA, WebAuthn/FIDO2, SSO/SAML/OIDC |
+| Autorización (ABAC/RBAC) | Control de acceso basado en atributos/roles | AWS IAM, Azure RBAC, OPA, Casbin |
+| OWASP Top 10 | Principales riesgos en aplicaciones web | Injection, XSS, Broken Auth, SSRF, XXE |
+| Network Security | Protección de perímetro de red | Firewalls, IDS/IPS, NAC, VPN, WAF, DDoS |
+| Seguridad en la nube | Protección de infraestructura cloud | CSPM, CWPP, CIEM, CASB, SASE |
+| DevSecOps | Seguridad integrada en el pipeline CI/CD | SAST, DAST, SCA, secrets scanning, IaC scanning |
+| SIEM | Gestión de eventos e información de seguridad | Splunk, Sentinel, Elastic Security, QRadar |
+| SOAR | Orquestación, automatización y respuesta | Palo Alto XSOAR, Splunk SOAR, Tines |
+| Threat Intelligence | Información contextual sobre amenazas | MITRE ATT&CK, STIX/TAXII, OpenCTI |
 
 ## Tecnologías principales
 
-| Categoría | Tecnologías |
-|-----------|-------------|
-| Secretos y PKI | HashiCorp Vault, AWS KMS, Azure Key Vault, GCP Cloud KMS, cert-manager, Let's Encrypt, Step CA |
-| IAM | AWS IAM, Azure AD / Entra ID, GCP IAM, Keycloak, Authentik, Okta, Auth0 |
-| WAF | AWS WAF, Cloudflare WAF, ModSecurity (Coraza, libmodsecurity), Azure WAF |
-| Escáneres | Trivy, Grype, Snyk, Dependabot, SonarQube, Semgrep, Checkov (IaC), Terrascan |
-| Runtime security | Falco, Tracee, Falco Talon, Tetragon (Cilium/eBPF) |
-| SIEM | Wazuh, ELK Stack (Elasticsearch + Logstash + Kibana), Splunk, Chronicle, Sentinel (Azure) |
-| Pentesting | Burp Suite, OWASP ZAP, Metasploit, Nmap, sqlmap, Hydra, John the Ripper, Hashcat |
+| Categoría | Herramientas | Propósito |
+|-----------|-------------|-----------|
+| SAST (Static Analysis) | SonarQube, Checkmarx, Fortify, Semgrep, CodeQL | Análisis de seguridad en código fuente |
+| DAST (Dynamic Analysis) | OWASP ZAP, Burp Suite, Acunetix | Análisis de seguridad en aplicaciones en ejecución |
+| SCA (Software Composition) | Snyk, Dependabot, Trivy, OWASP Dependency-Check | Vulnerabilidades en dependencias |
+| Secrets Scanning | GitGuardian, truffleHog, Gitleaks, detect-secrets | Detección de credenciales expuestas |
+| IaC Scanning | Checkov, tfsec, Terrascan, KICS | Seguridad en infraestructura como código |
+| Container Security | Trivy, Grype, Clair, Anchore, Docker Scout | Vulnerabilidades en imágenes |
+| WAF (Web App Firewall) | Cloudflare WAF, AWS WAF, ModSecurity, Coraza | Protección de aplicaciones web |
+| Endpoint Security | CrowdStrike, SentinelOne, Defender, osquery | Protección de endpoints |
+| EDR/XDR | CrowdStrike, SentinelOne, Palo Alto Cortex, Microsoft 365 Defender | Detección y respuesta en endpoints |
+| Identity/Access | Okta, Azure AD, Auth0, Keycloak, Ory | Gestión de identidades y acceso |
+| Cloud Security | AWS Security Hub, Azure Defender, GCP SCC | Seguridad cloud unificada |
+| Vulnerability Management | Tenable, Qualys, Rapid7, OpenVAS | Gestión de vulnerabilidades |
+| SIEM | Splunk, Sentinel, Elastic, QRadar, Wazuh | Correlación de eventos de seguridad |
+| Secrets Management | HashiCorp Vault, AWS Secrets Manager, CyberArk | Gestión de secretos |
+| PKI/Certificates | cert-manager, Smallstep, EJBCA, Let's Encrypt | Gestión de certificados |
 
-## Hoja de ruta
+## Hoja de ruta detallada
 
-1. **Principiante**: Conceptos de seguridad — autenticación vs autorización — contraseñas seguras y hashing — HTTPS/TLS — OWASP Top 10 (cada vulnerabilidad, entender y mitigar) — CORS, CSP, XSS, SQL injection
-2. **Intermedio**: OAuth 2.0 y OIDC (flujos, tokens, scopes) — JWT (estructura, validación, refresh tokens) — API security (rate limiting, input validation, API keys) — seguridad en contenedores (Trivy, Dockerfile best practices) — SAST (Semgrep, SonarQube) — TLS/SSL hardening
-3. **Avanzado**: Zero Trust architecture — Seguridad en K8s (PodSecurityStandards, NetworkPolicies, Falco, OPA) — DAST (OWASP ZAP automation) — SCA (SBOM, dependencias) — DevSecOps pipeline (security gates, shift left) — cloud security posture management — secrets management (Vault)
-4. **Experto**: Criptografía avanzada (curvas elípticas, cifrado homomórfico, ZKP) — exploit development — threat modeling (STRIDE, PASTA, Attack trees) — security architecture review — purple teaming — compliance automation (SOC 2, PCI-DSS, ISO 27001) — investigación de vulnerabilidades 0-day
+1. **Principiante (0-3 meses)**: Conceptos fundamentales: CIA (Confidencialidad, Integridad, Disponibilidad), AAA (Autenticación, Autorización, Accounting), non-repudiation. Criptografía básica: cifrado simétrico (AES) vs asimétrico (RSA), hashing (SHA-256), firmas digitales, certificados X.509, TLS/SSL (handshake, cipher suites, HSTS). OWASP Top 10: entender cada vulnerabilidad (Injection, XSS, Broken Authentication, Sensitive Data Exposure, XXE, Broken Access Control, Security Misconfiguration, Insecure Deserialization, Components with Known Vulnerabilities, Insufficient Logging). Autenticación: passwords (hashing con bcrypt/argon2), MFA, OAuth 2.0 básico, JWT (estructura, firma, mejores prácticas). Seguridad en redes: firewalls básicos (iptables/nftables), TLS/HTTPS, VPN (WireGuard). Herramientas básicas: nmap (escaneo de puertos), Wireshark (análisis de tráfico), OpenSSL (certificados), curl.
+   - Práctica: Configurar HTTPS con Let's Encrypt en un servidor web. Implementar autenticación JWT en API. Escaneo básico con nmap.
+   - Certificación: CompTIA Security+, ISC2 CC, o Google Cybersecurity Certificate.
+
+2. **Intermedio (3-8 meses)**: Seguridad en aplicaciones web: SQL injection (prevención con prepared statements, ORM, WAF), XSS (reflected, stored, DOM-based — Content-Security-Policy, input sanitization), CSRF (tokens, SameSite cookies), SSRF, XXE, IDOR, path traversal, Log4j/LFI, RCE. OWASP ASVS (Application Security Verification Standard). API security: API keys, OAuth 2.0 + OpenID Connect en profundidad (grant types: authorization code, PKCE, client credentials, implicit — deprecated), rate limiting, API gateways (Kong, Apigee, Tyk), JWT validation, API key rotation. DevSecOps: SAST en CI/CD (Semgrep, CodeQL), dependency scanning (Dependabot, Renovate, Snyk), secrets detection (GitGuardian, pre-commit hooks), IaC scanning (Checkov, tfsec), container scanning (Trivy). Security Headers: CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, CORS. Seguridad en la nube: IAM (least privilege, roles, policies), S3 bucket policies (block public access), security groups, NACLs, KMS (customer managed keys, envelope encryption), CloudTrail (logging), AWS Config (compliance), secrets management (AWS Secrets Manager, Parameter Store). Autenticación MFA: TOTP, WebAuthn/FIDO2 (passkeys, hardware tokens, biometrics).
+   - Práctica: SAST + SCA + DAST pipeline en GitHub Actions. Configurar IAM y seguridad de red en AWS/GCP. Implementar OAuth 2.0 + OIDC.
+   - Certificación: CompTIA CySA+, GIAC GSEC, AWS Security Specialty, Azure Security Engineer (AZ-500).
+
+3. **Avanzado (8-14 meses)**: Zero Trust Architecture (ZTA): microsegmentación, identity-aware proxy (BeyondCorp, Tailscale), device trust, continuous verification, least privilege, NIST SP 800-207. Seguridad en Kubernetes: Pod Security Standards, OPA/Gatekeeper, Kyverno policies, seccomp/AppArmor profiles, image signing (Cosign), network policies (Cilium eBPF), runtime security (Falco), Kubernetes CIS benchmark, CKS exam topics. Cryptography avanzado: ECC (Curve25519, P-256), Ed25519, post-quantum cryptography (Kyber, Dilithium), TLS 1.3 (0-RTT, PSK), end-to-end encryption (Signal Protocol, MLS), key derivation (HKDF, PBKDF2, argon2), AEAD (AES-GCM, ChaCha20-Poly1305). Threat modeling: STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation), PASTA, attack trees, threat matrix (MITRE ATT&CK). Security operations: SIEM rule creation (Splunk SPL, KQL, Elastic EQL), incident response (NIST SP 800-61), forensic analysis (Autopsy, Volatility), malware analysis (sandbox, Ghidra, IDA). Offensive security: Metasploit, Burp Suite Professional, SQLMap, BeEF, hydra, hashcat. Reverse engineering: PE/ELF analysis, disassembly (Ghidra, IDA, Binary Ninja), debugging (x64dbg, GDB), packer detection.
+   - Práctica: Laboratorio Zero Trust con Tailscale + OPA + Cilium. Writeup de máquina HackTheBox/TryHackMe. Análisis de malware en sandbox.
+   - Certificación: OSCP, OSCE, GPEN, GCIH, CKS, AWS Security Professional (SCS-C02).
+
+4. **Experto (14+ meses)**: Advanced persistent threats (APT): detección y respuesta, threat hunting (YARA, Sigma, Zeek). Hardware security: TPM, Secure Enclave, SGX/TDX, SEV-SNP, HSM, TrustZone, secure boot, measured boot, attestation. Supply chain security: SBOM (CycloneDX, SPDX), SLSA (Supply chain Levels for Software Artifacts), in-toto attestations, Sigstore (Cosign, Fulcio, Rekor). Security automation: SOAR workflows, automated incident response, Tines/Splunk SOAR, XDR correlation. Compliance automation: compliance as code, AWS Config rules, Azure Policy, Inspec, compliance frameworks (PCI DSS, HIPAA, SOC 2, FedRAMP, ISO 27001, GDPR, SOX). AI security: adversarial ML, model poisoning, model inversion, data poisoning, prompt injection (OWASP Top 10 for LLMs), jailbreaking, model security (RLHF robustness). Blockchain security: smart contract auditing, formal verification, DeFi exploits. Bug bounty: programa de recompensas (HackerOne, Bugcrowd), disclosure policies, report writing, CVE assignment. Fuzzing: AFL++/libFuzzer, HonggFuzz, OSS-Fuzz, coverage-guided fuzzing. Formal verification: seL4 certification, TLA+, Coq, Isabelle.
+   - Práctica: Implementar y verificar seL4 proof. Análisis de smart contract vulnerability. Participar en bug bounty program.
+   - Certificación: CISSP, OSCE3, OSED, GXPN, GIAC GSE, CCSK (cloud security).
 
 ## Relaciones con otros módulos
 
-- [000-Core](../000-Core/) — Algoritmos criptográficos, hashing, complejidad de ataque (birthday attack, brute force)
-- [001-Languages](../001-Languages/) — Bibliotecas criptográficas (cryptography, PyNaCl, ring, crypto/rsa, Java JCA/JCE)
-- [002-Frameworks](../002-Frameworks/) — Middleware de autenticación/autorización (Spring Security, Django Guardian, Passport.js)
-- [003-Databases](../003-Databases/) — Cifrado en reposo (TDE, pgcrypto), RBAC en DB, inyección SQL, SSL connections, Secrets Manager
-- [004-OperatingSystems](../004-OperatingSystems/) — SELinux, AppArmor, seccomp, kernel hardening, Firewalls (iptables/nftables)
-- [005-Cloud](../005-Cloud/) — IAM, KMS, WAF, Shield, GuardDuty, Security Hub, CloudTrail, Shared Responsibility Model
-- [006-Containers](../006-Containers/) — Rootless containers, capabilities, seccomp, signing, scanning
-- [007-Orchestration](../007-Orchestration/) — PodSecurityStandards, NetworkPolicies, RBAC, Falco, OPA, Kyverno, cert-manager
-- [008-Networking](../008-Networking/) — TLS/mTLS, firewalls, WAF, VPN, DDoS, network segmentation, Zero Trust
-- [053-Compliance](../053-Compliance/) — GDPR, HIPAA, PCI-DSS, SOC 2, ISO 27001, NIST CSF
+| Módulo | Relación |
+|--------|----------|
+| [000-Core](../000-Core/) | Algoritmos criptográficos, hashing, complejidad de ataque |
+| [001-Languages](../001-Languages/) | Memory safety (Rust), type safety, input validation |
+| [002-Frameworks](../002-Frameworks/) | Seguridad en frameworks: CSRF, XSS, auth implícita |
+| [003-Databases](../003-Databases/) | SQL injection, cifrado en reposo, RBAC, audit logs |
+| [004-OperatingSystems](../004-OperatingSystems/) | SELinux, AppArmor, seccomp, kernel hardening |
+| [005-Cloud](../005-Cloud/) | Cloud IAM, KMS, network security, SIEM, compliance |
+| [006-Containers](../006-Containers/) | Image scanning, runtime security, seccomp profiles |
+| [007-Orchestration](../007-Orchestration/) | Pod security, network policies, RBAC, secrets |
+| [008-Networking](../008-Networking/) | Firewalls, VPN, WAF, network segmentation, mTLS |
+| [010-Architecture](../010-Architecture/) | Secure architecture, threat modeling, trust boundaries |
+| [012-Testing](../012-Testing/) | Security testing (SAST, DAST, pentest, fuzzing) |
+| [014-CICD](../014-CICD/) | DevSecOps pipeline, security gates, artifact signing |
+| [035-RAG](../035-RAG/) | RAG security: prompt injection, data leakage |
+| [037-AgenticAI](../037-AgenticAI/) | AI agent security, tool access control, sandboxing |
 
 ## Recursos recomendados
 
-- **OWASP**: owasp.org (OWASP Top 10, ASVS, Cheat Sheet Series, OWASP ZAP, Web Security Testing Guide)
-- **Libros**: "The Web Application Hacker's Handbook" (Stuttard, Pinto); "Practical Cryptography" (Ferguson, Schneier); "Zero Trust Networks" (Gilman, Barth); "Hacking: The Art of Exploitation" (Erickson)
-- **Plataformas**: TryHackMe, HackTheBox, PortSwigger Web Security Academy (Burp Suite, labs gratuitos)
-- **Cursos**: Stanford CS255 (Cryptography), Coursera Cryptography I/II (Boneh), SANS training
-- **Certificaciones**: CompTIA Security+, Certified Ethical Hacker (CEH), OSCP (Offensive Security), CISSP, AWS Security Specialty
+- **Libros**: "The Web Application Hacker's Handbook" (Stuttard, Pinto), "The Tangled Web" (Zalewski), "Practical Malware Analysis" (Sikorski, Honig), "Cryptography Engineering" (Ferguson, Schneier), "Zero Trust Networks" (Gillman, Reichel, Osborn).
+- **Cursos**: Cybrary, Pluralsight (Dale Meredith), SANS courses (muy caros, pero Gold Standard), PortSwigger Web Security Academy (gratis), TryHackMe, HackTheBox Academy.
+- **Plataformas**: HackTheBox, TryHackMe, PortSwigger Labs, OWASP WebGoat/Juice Shop, PentesterLab, RootMe.
+- **Frameworks**: MITRE ATT&CK, OWASP Top 10, NIST Cybersecurity Framework, CIS Controls, OWASP ASVS.
+- **Herramientas**: Burp Suite, OWASP ZAP, nmap, Metasploit, Wireshark, Ghidra, Hashcat, John the Ripper, SQLMap.
+- **Comunidad**: DEFCON, BlackHat, BSides, OWASP meetups, HackerOne, Bugcrowd, /r/netsec.
+
+## Notas adicionales
+
+La seguridad no es un producto sino un proceso. Se recomienda comenzar con fundamentos (Security+, OWASP Top 10) y luego especializarse en offensive o defensive. El ethical hacking y bug bounty son excelentes formas de práctica. Conocer MITRE ATT&CK es esencial para entender el panorama de amenazas. La demanda de profesionales de seguridad es extremadamente alta. La ética es fundamental: solo pentestear sistemas con autorización explícita.

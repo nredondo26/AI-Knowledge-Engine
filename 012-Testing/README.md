@@ -1,61 +1,79 @@
-# 012-Testing
+# 012-Testing: Pruebas de Software
 
-## Descripción del dominio
+## Descripción ampliada del dominio
 
-El testing de software es el proceso de evaluar y verificar que un sistema cumple con los requisitos esperados y no presenta defectos. Abarca múltiples niveles (unitario, integración, sistema, aceptación) y enfoques (manual, automatizado, funcional, no funcional). Las metodologías modernas como TDD (Test-Driven Development) y BDD (Behavior-Driven Development) integran las pruebas en el flujo de desarrollo desde el inicio, mejorando la calidad, reduciendo el costo de los defectos y proporcionando una red de seguridad para la refactorización continua.
+Las pruebas de software verifican que el sistema cumple con los requisitos especificados, detectan defectos temprano, y proporcionan confianza en la calidad del producto. Este módulo cubre la teoría y práctica de testing: pirámide de pruebas (unitarias, integración, E2E), tipos (funcionales, no funcionales, regresión, humo, aceptación, exploratorio), técnicas (caja negra, caja blanca, caja gris), automatización, TDD/BDD, mocking, cobertura, y herramientas del ecosistema moderno. La evolución del testing: de pruebas manuales (1980s-90s) a automatización (2000s), TDD (2003, Kent Beck), BDD (2006, Dan North), pruebas continuas en CI/CD (2010s), y testing impulsado por IA (2020s, generación automática de tests). La "pirámide de pruebas" (Mike Cohn, 2009) establece que debe haber muchas pruebas unitarias rápidas, menos pruebas de integración, y pocas pruebas E2E lentas. El testing no es solo un rol: es una responsabilidad de todo desarrollador. Las pruebas automatizadas son inversión, no gasto: pagan dividendos en calidad, velocidad de desarrollo y confianza para refactorizar.
 
-## Conceptos clave
+## Tabla de conceptos clave
 
-- **Prueba unitaria**: verifica el comportamiento de la unidad más pequeña del software (función, método, clase) de forma aislada, usando mocks o stubs para las dependencias externas.
-- **Prueba de integración**: valida que varios módulos o servicios funcionen correctamente al interactuar entre sí, incluyendo bases de datos, APIs y sistemas de archivos.
-- **Prueba E2E (End-to-End)**: simula el flujo completo del usuario a través de toda la aplicación, desde la interfaz de usuario hasta la base de datos, pasando por todos los servicios intermedios.
-- **TDD (Test-Driven Development)**: ciclo de desarrollo donde primero se escribe una prueba que falla, luego el código mínimo para que pase, y finalmente se refactoriza (Red-Green-Refactor).
-- **BDD (Behavior-Driven Development)**: extensión de TDD que describe el comportamiento esperado del sistema en lenguaje natural usando el formato Given-When-Then, con herramientas como Cucumber o SpecFlow.
-- **Mock**: objeto simulado que imita el comportamiento de una dependencia real, permitiendo verificar interacciones (qué métodos se llamaron, con qué argumentos).
-- **Stub**: objeto que proporciona respuestas predefinidas a las llamadas durante la prueba, sin verificar interacciones.
-- **Fixture**: conjunto de datos o estado predefinido necesario para ejecutar una prueba de manera consistente.
-- **Cobertura (coverage)**: métrica que indica qué porcentaje del código (líneas, ramas, funciones) está siendo ejecutado por las pruebas.
-- **Pirámide de testing**: modelo que recomienda muchos tests unitarios (base), menos tests de integración (medio) y pocos tests E2E (cima), maximizando la velocidad y la confianza.
-- **Prueba de regresión**: conjunto de pruebas que se ejecutan tras cada cambio para asegurar que las funcionalidades existentes no se rompan.
-- **Prueba de humo (smoke test)**: conjunto mínimo de pruebas rápidas que verifican que las funcionalidades críticas del sistema funcionan antes de proceder con pruebas más profundas.
-- **Property-Based Testing**: enfoque donde se definen invariantes o propiedades que deben cumplirse para un rango amplio de entradas generadas automáticamente (p.ej., con Hypothesis o QuickCheck).
+| Concepto | Descripción | Frameworks/Herramientas |
+|----------|-------------|------------------------|
+| Prueba unitaria | Verifica una unidad aislada del código (función, método, clase) | Jest, pytest, JUnit, NUnit, Mocha, RSpec |
+| Prueba de integración | Verifica interacción entre unidades/módulos/sistemas | Spring Test, Testcontainers, Supertest, pytest-django |
+| Prueba E2E | Verifica flujo completo del sistema desde UI | Cypress, Playwright, Selenium, Puppeteer, TestCafe |
+| Prueba de API | Verifica endpoints HTTP, contratos REST/GraphQL | Postman, REST Assured, Supertest, Newman |
+| Prueba de regresión | Verifica que cambios no rompen funcionalidad existente | Automatización de toda la suite de pruebas |
+| Prueba de aceptación | Verifica que el sistema cumple criterios de negocio | Cucumber, SpecFlow, FitNesse, Behat |
+| Prueba de carga/rendimiento | Verifica comportamiento bajo estrés y carga | k6, JMeter, Locust, Gatling, Artillery |
+| Prueba de seguridad | Verifica vulnerabilidades de seguridad | OWASP ZAP, Burp Suite, SonarQube (SAST) |
+| Prueba de humo (Smoke) | Verificación rápida de funcionalidades críticas | Test suite mínimo, post-deploy |
+| Prueba exploratoria | Testing manual sin script, descubrimiento de bugs | Manual + herramientas de grabación |
+| TDD (Test-Driven Development) | Escribir test antes del código: Red → Green → Refactor | Todos los frameworks de testing |
+| BDD (Behavior-Driven Development) | Pruebas en lenguaje natural (Given/When/Then) | Cucumber, SpecFlow, behave, jbehave |
 
 ## Tecnologías principales
 
-- **Unitarios**: JUnit (Java), pytest (Python), Jest (JS/TS), NUnit/xUnit (.NET), RSpec (Ruby), Go testing
-- **Mocking**: Mockito (Java), unittest.mock (Python), Jest mocks (JS/TS), Moq (.NET), gomock (Go)
-- **BDD**: Cucumber, SpecFlow, Behave (Python), Jasmine, Mocha
-- **E2E**: Selenium, Cypress, Playwright, Puppeteer, TestCafe
-- **Cobertura**: JaCoCo (Java), coverage.py, Istanbul (JS/TS), OpenCover (.NET)
-- **Integración/API**: REST Assured, Postman/Newman, Supertest, Karate, WireMock
-- **Property-Based**: Hypothesis (Python), fast-check (JS/TS), jqwik (Java)
-- **CI integración**: Jenkins, GitHub Actions, GitLab CI, CircleCI
+| Lenguaje | Frameworks de testing | Mocking/Stubbing | Coverage | Assertions |
+|----------|----------------------|-------------------|----------|------------|
+| Python | pytest, unittest, nose2 | unittest.mock, pytest-mock, moto | coverage.py, pytest-cov | pytest assert, hamcrest |
+| JavaScript/TypeScript | Jest, Vitest, Mocha, Jasmine | Jest mock, sinon.js, nock | c8, Istanbul, Jest --coverage | Jest expect, chai |
+| Java/Kotlin | JUnit 5, TestNG | Mockito, EasyMock, WireMock, MockServer | JaCoCo, jacoco-maven-plugin | AssertJ, Hamcrest |
+| Go | testing (stdlib), testify, ginkgo | testify/mock, minimock, sqlmock | go test -cover, goveralls | testify/assert |
+| Rust | cargo test, rstest | mockall, mockito, fake, proptest | tarpaulin, llvm-cov | assert, assert_eq |
+| Ruby | RSpec, Minitest | rspec-mocks, webmock, vcr | simplecov | rspec-expectations |
+| C# | xUnit, NUnit, MSTest | Moq, NSubstitute, FakeItEasy | Coverlet, dotCover | FluentAssertions |
 
-## Hoja de ruta
+## Hoja de ruta detallada
 
-1. **Principiante**: escribir pruebas unitarias simples con asserts; entender asserts, test runners y fixtures; usar mocks y stubs básicos; ejecutar pruebas localmente y en CI; medir cobertura básica.
-2. **Intermedio**: aplicar TDD sistemáticamente (Red-Green-Refactor); escribir pruebas de integración con bases de datos reales o en memoria; usar BDD para describir funcionalidades en lenguaje de negocio; organizar suites por categorías (unitarias, integración, lentas).
-3. **Avanzado**: diseñar pruebas E2E con patrones Page Object y API testing; implementar property-based testing para detectar casos borde; aplicar mutation testing para evaluar la calidad de las pruebas; optimizar tiempos de ejecución con paralelización y test sharding.
-4. **Experto**: integrar tests de seguridad (SAST, DAST) y rendimiento (carga, estrés) en el pipeline; diseñar estrategias de testing para microservicios (contract testing con Pact); incorporar pruebas de caos (Chaos Engineering); definir políticas de calidad y umbrales de cobertura por equipo.
+1. **Principiante (0-2 meses)**: Conceptos: qué es un test, valor de los tests, tipos de tests según la pirámide. Pruebas unitarias: estructura (Arrange, Act, Assert — AAA), naming (test_method_expectedBehavior), asserts básicos (assertEquals, assertTrue). Correr tests desde CLI y desde IDE. Aislar unidades: stubs y mocks básicos (reemplazar dependencias externas). Coverage: entender línea, rama, función — usar herramienta de coverage (pytest-cov, Jest --coverage). Red-Green-Refactor en TDD. Tests parametrizados. Excepciones y edge cases (null, valores límite, strings vacíos). Test doubles: Stub (retorna datos fijos), Mock (verifica interacciones), Fake (implementación ligera funcional), Dummy (parámetro pasado pero no usado), Spy (registra interacciones).
+   - Práctica: Escribir tests unitarios para módulo de negocio (cálculos, validaciones). Configurar coverage. Hacer TDD para una función simple.
+   - Lectura: "Test-Driven Development by Example" (Beck), pytest docs / JUnit docs.
+
+2. **Intermedio (2-6 meses)**: Pruebas de integración: base de datos (Testcontainers, Django test DB), APIs HTTP (Supertest, REST Assured, WebTest), sistema de archivos (tempfile, mock filesystem). Mocks avanzados: Mockito (verify, times, any(), eq(), argument captors), pytest-mock (mocker fixture, patch context manager). Fakes y test containers: contenedores Docker para dependencias (PostgreSQL, Redis, Kafka, Elasticsearch) con Testcontainers, LocalStack para AWS. Pruebas de API: Postman collections, Newman (CLI), schemas OpenAPI contract testing, status codes, headers, body schema validation. Parametrized tests: múltiples inputs y outputs, fuzzing básico. Test fixtures: setUp/tearDown, conftest.py (pytest), @Before/@After (JUnit). Hierarchical tests: describe/groups en Jest/Mocha, Nested contexts en RSpec. BDD: Given/When/Then con Cucumber/behave, step definitions. Prueba de snapshot/testing de UI components.
+   - Proyecto: Suite completa de tests unitarios + integración para API REST. Dockerizar tests con Testcontainers. BDD para un flujo de negocio.
+   - Lectura: "xUnit Test Patterns" (Meszaros), "Growing Object-Oriented Software Guided by Tests" (Freeman, Pryce).
+
+3. **Avanzado (6-12 meses)**: Pruebas E2E: Playwright/Cypress (web), Detox (React Native mobile), Appium (mobile). Page Object Model (POM) para organización. Fixtures y contextos en E2E. Screenshot diff testing (percy, Applitools). Test retry, flakiness detection, parallel execution. Contract testing: Pact (consumer-driven contract tests), Spring Cloud Contract, JSON Schema validation, gRPC contract testing. Performance testing: k6 (scripting en JS, thresholds, metrics), JMeter (test plans, assertions, listeners), Locust (Python, distributed), Gatling (Scala). Chaos testing: Chaos Monkey, Chaos Mesh, Litmus, Gremlin — inyectar fallos para probar resiliencia. Mutation testing: PIT (Java), MutPy (Python), Stryker (JS) — mutar código para validar que tests detectan errores. Property-based testing: Hypothesis (Python), fast-check (JS), QuickTheories (Java), proptest (Rust). Fuzzing: AFL++, libFuzzer, OSS-Fuzz. Prueba de seguridad en CI/CD: SAST (Semgrep, CodeQL, SonarQube), SCA (Snyk, Dependabot), secret scanning.
+   - Proyecto: E2E tests con Playwright + visual regression. Performance tests con k6 para API. Contract tests con Pact en pipelines CI.
+   - Lectura: "Continuous Delivery" (Humble, Farley) capítulo testing, Playwright docs, k6 docs.
+
+4. **Experto (12+ meses)**: Estrategias de testing en microservicios: test pyramids adaptadas (contract tests, consumer-driven contracts, component tests, integration tests with Testcontainers). Testing en arquitecturas event-driven: testing de streams (Kafka test containers, schema registry), idempotency tests, outbox pattern testing. AI for testing: generación automática de tests (Copilot, Diffblue, EvoSuite, TestSpark), AI-powered test maintenance, self-healing tests (Mabl, Testim, Functionize). Observability-driven testing: OpenTelemetry + tests, trace-based testing. Quality gates en CI/CD: coverage thresholds, mutation score gates, flaky test detection and quarantine, test impact analysis (solo correr tests afectados por cambios). Meta-testing: testing de los propios tests (mutation score, coverage del test suite), test smells. Chaos engineering como testing de producción. Performance regression testing: benchmark comparison (JMH, pyperf), flame graph analysis. Security regression testing: fuzzing regression, security baseline. Formal verification: TLA+, Coq, Isabelle para sistemas críticos.
+   - Proyecto: Mutation testing pipeline. AI test generation integration. Custom test framework/runner para dominio específico.
+   - Lectura: "Software Testing and Analysis" (Mauro, Pezzè), papers on AI testing, mutation testing.
 
 ## Relaciones con otros módulos
 
-- [010-Architecture](../010-Architecture/) — la arquitectura (hexagonal, clean) determina la testabilidad: inversión de dependencias y puertos facilitan mocks y pruebas aisladas.
-- [011-DesignPatterns](../011-DesignPatterns/) — patrones como Dependency Injection, Factory y Observer hacen el código más testeable.
-- [013-DevOps](../013-DevOps/) — las pruebas se integran en los pipelines de CI/CD; la calidad se monitorea en dashboards de observabilidad.
-- [014-CICD](../014-CICD/) — cada etapa del pipeline ejecuta distintos niveles de prueba (unitarias rápidas primero, integración después, E2E en paralelo).
-- [015-Automation](../015-Automation/) — automatización de la ejecución de pruebas, generación de reportes y gestión de entornos de prueba.
-- [016-RPA](../016-RPA/) — las pruebas de bots RPA requieren simulación de entradas y verificación de salidas automatizadas.
-- [018-ERP](../018-ERP/) — el testing de módulos ERP implica datos maestros, configuraciones y flujos de negocio complejos.
-- [019-CRM](../019-CRM/) — las integraciones con CRM requieren pruebas de conectividad, sincronización y transformación de datos.
+| Módulo | Relación |
+|--------|----------|
+| [000-Core](../000-Core/) | Testing de algoritmos y estructuras de datos |
+| [001-Languages](../001-Languages/) | Testing específico de cada lenguaje y sus frameworks |
+| [002-Frameworks](../002-Frameworks/) | Testing de componentes, hooks, servicios en frameworks |
+| [003-Databases](../003-Databases/) | Test data management, test DB isolation, migraciones de test |
+| [009-Security](../009-Security/) | SAST/DAST, penetration testing, security scanning |
+| [010-Architecture](../010-Architecture/) | Arquitectura de tests, test pyramid, contract testing |
+| [011-DesignPatterns](../011-DesignPatterns/) | Test patterns (Page Object, Test Builder, Object Mother) |
+| [013-DevOps](../013-DevOps/) | Pruebas automatizadas en CI/CD, quality gates |
+| [014-CICD](../014-CICD/) | Ejecución de tests en pipeline, parallel test execution |
+| [031-AI](../031-AI/) | AI-generated tests, self-healing tests, AI for QA |
 
 ## Recursos recomendados
 
-- *Test-Driven Development: By Example* — Kent Beck
-- *Working Effectively with Legacy Code* — Michael Feathers
-- *xUnit Test Patterns* — Gerard Meszaros
-- *The Art of Unit Testing* — Roy Osherove
-- *Growing Object-Oriented Software, Guided by Tests* — Steve Freeman, Nat Pryce
-- *Specification by Example* — Gojko Adzic
-- *Property-Based Testing with PropEr, Erlang QuickCheck* — Fred Hebert
-- *Continuous Delivery* — Jez Humble, David Farley
+- **Libros**: "Test-Driven Development by Example" (Beck), "xUnit Test Patterns" (Meszaros), "Growing Object-Oriented Software Guided by Tests" (Freeman, Pryce), "Continuous Delivery" (Humble, Farley) capítulos 5-9, "Software Testing and Analysis" (Pezzè, Young).
+- **Cursos**: Coursera "Software Testing and Automation" (UMD), "Testing with Python" (TestDriven.io), "Modern React Testing" (TestingJavaScript.com).
+- **Herramientas**: playwright.dev, cypress.io, vitest.dev, docs.pytest.org, k6.io, pact.io, testcontainers.com, stryker-mutator.io, hypothesis.works.
+- **Blogs**: Martin Fowler (martinfowler.com/testing), TestDriven.io, The Practical Test Pyramid (Ham Vocke).
+- **Práctica**: Kata de TDD (String Calculator, Bowling Game, FizzBuzz, Roman Numerals), Testing en proyectos open source, contribuir a snapshots.
+
+## Notas adicionales
+
+Las pruebas automatizadas son una inversión: un buen test suite permite refactorizar con confianza y entrega rápida. La cobertura de línea no es el objetivo (80% es aceptable, 100% no es realista), sino la confianza en que los tests detectan regresiones. Mutation testing es mejor métrica que code coverage. TDD no es testing; es una técnica de diseño que produce tests como subproducto. En microservicios, los contract tests consumer-driven son más importantes que los E2E. El testing en producción (canary analysis, feature flags) complementa el testing pre-producción.

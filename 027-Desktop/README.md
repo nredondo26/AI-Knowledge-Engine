@@ -1,72 +1,78 @@
-# 027-Desktop: Aplicaciones de Escritorio
+# 027-Desktop: Desarrollo de Escritorio
 
-## Descripción del dominio
+## Descripción ampliada del dominio
 
-El desarrollo de aplicaciones de escritorio abarca la creación de software que se ejecuta nativamente en sistemas operativos de escritorio (Windows, macOS, Linux). Incluye tecnologías nativas (WPF, WinForms, Qt, GTK, Cocoa) y frameworks multiplataforma (Electron, Tauri, .NET MAUI, Flutter Desktop, JavaFX). Las tendencias actuales combinan capacidades nativas con tecnologías web (Electron, Tauri), ofreciendo experiencias ricas con acceso completo al sistema de archivos, hardware y APIs del SO.
+El desarrollo de escritorio crea aplicaciones que se ejecutan nativamente en sistemas operativos de escritorio (Windows, macOS, Linux). Aunque las aplicaciones web y móviles han ganado protagonismo, las aplicaciones de escritorio siguen siendo esenciales para herramientas de productividad (Microsoft Office, Adobe Creative Suite), desarrollo (VS Code, JetBrains IDEs), diseño (Figma, Sketch), gaming, y aplicaciones enterprise que requieren acceso completo a hardware, alto rendimiento, capacidades offline y experiencia de usuario rica. La evolución del desarrollo desktop: aplicaciones nativas (C/C++ Win32/MFC, Cocoa/Objective-C, GTK/Qt en Linux, 1990s-2000s) → frameworks gestionados (.NET Windows Forms/WPF, Java Swing/JavaFX, 2000s-2010s) → frameworks multiplataforma (Electron, Qt, Flutter, 2015+) → aplicaciones web progresivas nativas (Tauri, Flutter Desktop, 2020+). Las tendencias actuales son: aplicaciones de escritorio impulsadas por WebView (Electron, Tauri), frameworks multiplataforma (Flutter, .NET MAUI, Qt), progressive web apps instalables como desktop apps, y aplicaciones nativas optimizadas con Rust y Swift.
 
-## Conceptos clave
+## Tabla de conceptos clave
 
-- **Native app**: Aplicación compilada para un sistema operativo específico (Win32, Cocoa, X11)
-- **Cross-platform desktop**: Framework que permite ejecutar la misma app en múltiples SO
-- **Electron**: Framework que ejecuta apps web como escritorio usando Chromium + Node.js
-- **Tauri**: Framework alternativo a Electron, usa el webview del sistema, más ligero (+Rust)
-- **Webview**: Componente nativo del SO para renderizar contenido web (WKWebView, WebView2)
-- **Win32 API**: API nativa de Windows para aplicaciones de escritorio
-- **WPF (Windows Presentation Foundation)**: Framework .NET para UI de escritorio Windows con XAML
-- **WinForms**: Framework .NET tradicional para aplicaciones Windows
-- **Qt**: Framework C++ multiplataforma, usado en KDE, Docker Desktop, VLC
-- **GTK**: Toolkit C multiplataforma, usado en GNOME, GIMP
-- **Menubar/Tray**: Icono y menú en la barra de estado del sistema
-- **System Tray**: Icono en el área de notificación del SO
-- **Auto-updater**: Mecanismo de actualización automática de la aplicación
-- **IPC (Inter-Process Communication)**: Comunicación entre procesos (main process ↔ renderer en Electron)
-- **Native modules**: Módulos compilados en C++ accesibles desde frameworks JS
-- **Window management**: Manejo de ventanas, posiciones, tamaños, estados (maximizado, minimizado)
-- **Drag & drop**: Arrastrar y soltar archivos desde el sistema hacia la aplicación
-- **File system access**: Acceso nativo a archivos y directorios locales
+| Concepto | Descripción | Frameworks |
+|----------|-------------|------------|
+| Nativo Windows | Aplicaciones para Windows usando APIs nativas | Win32, MFC, WPF, UWP, WinUI 3, Windows Forms |
+| Nativo macOS | Aplicaciones para macOS usando frameworks Apple | Cocoa (Objective-C), SwiftUI, AppKit |
+| Nativo Linux | Aplicaciones para Linux usando toolkits GTK/Qt | GTK (C/Python), Qt (C++/Python), EFL |
+| Multiplataforma | Código base compartido entre Windows, macOS, Linux | Qt, wxWidgets, .NET MAUI, Flutter, JavaFX, Tauri |
+| Electron | Framework multiplataforma basado en Chromium + Node.js | Electron (VS Code, Slack, Discord, Figma) |
+| Tauri | Framework multiplataforma ligero usando WebView nativo + Rust backend | Tauri (Rust + JS/TS, más ligero que Electron) |
+| Flutter Desktop | Framework declarativo multiplataforma de Google | Flutter Desktop, lenguaje Dart |
+| WebView | Componente de navegador embebido en app nativa | WKWebView (macOS), WebView2 (Windows), WebKitGTK (Linux) |
+| Arquitectura MVVM | Model-View-ViewModel para UI de escritorio | WPF MVVM, .NET MAUI MVVM, Qt QML |
+| Single Instance | Garantizar que solo una instancia de la app se ejecute | Named pipes, lock files, Mutex |
 
 ## Tecnologías principales
 
-- **Electron**: Chromium + Node.js, apps como VS Code, Slack, Discord, WhatsApp Desktop, Figma
-- **Tauri**: Webview del SO + backend Rust, más pequeño y seguro, creciendo rápidamente
-- **WPF (.NET)**: Framework Windows con XAML, data binding, MVVM, usado en aplicaciones enterprise
-- **WinForms (.NET)**: Legacy pero aún usado en apps empresariales de Windows
-- **Qt (C++ / PySide / QML)**: Framework multiplataforma C++ con bindings para Python, JS, Rust
-- **GTK (C / Python / Rust)**: Toolkit del ecosistema GNOME, GIMP, Inkscape
-- **Flutter Desktop**: Versión desktop de Flutter (Windows, macOS, Linux) — emergente
-- **.NET MAUI**: Evolución de Xamarin.Forms para desktop (Windows, macOS)
-- **JavaFX**: Framework Java para UI de escritorio, reemplazo de Swing
-- **Swing (Java)**: Legacy toolkit Java para aplicaciones desktop
-- **Cocoa (macOS)**: Framework nativo de Apple para apps macOS con Swift/Objective-C
-- **Sciter**: Motor HTML/CSS ligero para apps desktop nativas
-- **Neutralino.js**: Alternativa minimalista sin Chromium, usa webview nativo
-- **NW.js**: Similar a Electron, permite Node.js directo en el frontend
+| Framework | Lenguaje | Plataformas | Rendimiento | Tamaño app | Complejidad | Casos de uso |
+|-----------|----------|-------------|-------------|------------|-------------|--------------|
+| Qt 6 | C++, Python (PySide6/PyQt6) | Win, Mac, Linux | Nativo | Medio | Alta | Apps profesionales, CAD, multimedia |
+| Electron | JS/TS, HTML, CSS | Win, Mac, Linux | Medio | Grande (100MB+) | Media | Apps web-like: VS Code, Slack, Discord |
+| Tauri 2 | Rust + JS/TS | Win, Mac, Linux | Casi nativo | Pequeño (3-10MB) | Media | Apps ligeras, seguras, modernas |
+| WPF (.NET) | C# | Windows | Nativo | Medio | Alta | Apps empresariales Windows |
+| WinUI 3 | C# | Windows 10+ | Nativo (moderno) | Medio | Alta | Apps modernas Windows 11 |
+| Flutter Desktop | Dart | Win, Mac, Linux | Alto | Medio (20-40MB) | Media | Cross-platform UI consistente |
+| SwiftUI | Swift | macOS, iOS, watchOS, tvOS | Nativo | Pequeño | Baja | Ecosistema Apple, moderno |
+| .NET MAUI | C# | Win, Mac, Android, iOS | Medio-alto | Medio | Media | .NET ecosystem, cross-platform |
+| JavaFX | Java, Kotlin, Scala | Win, Mac, Linux | Alto | Grande (JRE) | Alta | Enterprise, scientific |
+| GTK 4 | C, Python (PyGObject), Rust | Linux, Mac, Win | Nativo | Medio | Alta | Linux apps, GNOME ecosystem |
 
-## Hoja de ruta
+## Hoja de ruta detallada
 
-1. **Principiante**: Crear app de escritorio simple con Electron. Entender procesos main/renderer, IPC, menús y ventanas. Empaquetar y distribuir. Alternativa: app básica con Tauri.
-2. **Intermedio**: Aplicación desktop con acceso a sistema de archivos, notificaciones, tray icon. Integraciones con APIs del SO (shell, diálogos). Auto-updater. SQLite local.
-3. **Avanzado**: Arquitectura robusta con separación de procesos. Módulos nativos compilados para rendimiento crítico. Comunicación IPC segura y eficiente. Testing (unit, integration, E2E). Distribución multi-plataforma con firmado (code signing).
-4. **Experto**: Comparativa y selección óptima de framework según caso de uso. Optimización de memoria y rendimiento. Integración profunda con el SO (DLLs, .dylib, .so). Acceso a hardware (USB, impresoras, Bluetooth). Aplicaciones de tiempo real con GPU acceleration.
+1. **Principiante (0-2 meses)**: Conceptos fundamentales: ciclo de eventos (event loop), widgets/componentes, layouts, ventanas. Crear primera app: "Hello World" con Tauri + React/Vue, o Python + tkinter, o .NET MAUI. Manejo de eventos: click, input, selección. Widgets básicos: button, label, text input, checkbox, radio, list, combo box, menubar. Layouts: stack, grid, border, absolute positioning. Diálogos: message box, file open/save, color picker, font dialog. Estructura típica de proyecto desktop.
+   - Práctica: App simple "Calculadora" con Tauri/Electron/tkinter. App "To-Do List" con persistencia en archivo JSON.
+   - Lectura: Tauri docs, Electron docs, Python tkinter docs, .NET MAUI tutorials.
+
+2. **Intermedio (2-6 meses)**: Modelo de datos y persistencia: SQLite integrado, JSON/YAML config files, serialización. MVVM/MVC arquitectura: separación UI, lógica de negocio y datos. Data binding: enlace entre UI y modelo (WPF Binding, Qt signals/slots, Flutter streams). Menús: menubar, context menu, shortcuts, accelerators. Configuraciones: persistencia de preferencias, user settings. Eventos avanzados: drag and drop, clipboard, keyboard events, mouse events. Canvas y gráficos 2D básicos (custom painting, shapes, text). Multiventana: ventanas hijas, modales, pestañas. Undo/Redo: command pattern para acciones del usuario. Internacionalización (i18n): resource files, localization.
+   - Proyecto: App de notas con markdown (edición, vista previa, archivos, categorías). Editor de imágenes simple (crop, resize, filters).
+   - Lectura: Tauri advanced docs, Qt documentation (qt.io), "WPF 4.5 Unleashed" (Nathan).
+
+3. **Avanzado (6-12 meses)**: Rendimiento: lazy loading, virtualized lists (Large data sets), async operations (background threads, async/await), Web Workers (Electron), memory profiling, avoiding UI thread blocking. Threading: main thread vs worker threads, thread safety, UI dispatcher, synchronization. Procesos IPC (Electron): main process ↔ renderer process, contextBridge, preload scripts. System integration: file associations, custom URI scheme (deep linking), system tray, notifications, startup at boot, auto-update (electron-updater, Tauri updater), Windows Taskbar (jump lists, progress). Hardware access: serial port, Bluetooth, USB HID, camera, microphone, printer. Advanced graphics: hardware acceleration, Canvas 2D/WebGL (Electron/Tauri), Skia (Flutter). Testing desktop apps: unit tests, integration tests (spectron for Electron, Tauri driver, Flutter integration test), UI automation. Packaging and distribution: app signing (codesign), installers (NSIS, WiX, DMG, .deb/.rpm, AppImage). CI/CD for desktop: GitHub Actions build matrix (Win + Mac + Linux), code signing, notarization (macOS), automated releases. Accessibility: screen readers (VoiceOver, NVDA, JAWS), keyboard navigation, high contrast. Security: sandboxing, CSP in webviews, IPC validation, secure storage (keychain, dpapi).
+   - Proyecto: App de productividad (Kanban board, calendar, diagram editor) con file system, auto-save, undo/redo, system tray, auto-update.
+   - Certificación: No hay certificaciones específicas de desktop frameworks muy establecidas, pero contribuciones open source son muy valoradas.
+
+4. **Experto (12+ meses)**: High-performance rendering: Skia/OpenGL/DirectX integration, Vulkan (via Rust), custom shaders, GPGPU (CUDA, OpenCL). System-level integration: OS-specific APIs via FFI (Win32, Cocoa, Linux D-Bus), DLL injection, Windows services, macOS XPC services, Linux daemons. Native plugins: Rust native plugins (Tauri), C++ addons (Electron native modules, node-gyp). Performance profiling: Instruments (macOS), Visual Studio Profiler, Valgrind, perf (Linux), Chrome DevTools (Electron). Custom window chrome: frameless window, custom titlebar, rounded corners (Windows 11), vibrancy (macOS), blur behind. Multi-process architecture: Chromium's multi-process model (Electron), process sandboxing, process management for large apps. Security hardening: hardening Electron (contextIsolation, sandbox, disable remote), Tauri allowlist, code signing (authenticode, macOS hardened runtime). Accessibility compliance: WCAG 2.1 AA, Section 508, EN 301 549. Distribution at scale: Windows Store, Mac App Store, Linux packaging (Snap, Flatpak, AppImage), MSI/GPO deployment. WebView bridges: React/Next.js + Tauri/Electron (hybrid web-desktop apps). Auto-update infrastructure: Sparkle (macOS), Squirrel (Windows), Tauri updater (Rust). AI/ML on desktop: local LLMs with Ollama/llama.cpp, Whisper for speech, ONNX Runtime, TensorRT. Blockchain desktop: crypto wallets, dApp browsers.
+   - Proyecto: App desktop AI-local (chat with local LLM, image generation). High-performance CAD or video editor. Desktop app with system-level integration (file manager replacement).
+   - Lectura: Electron source code, Tauri source code, "Building Desktop Applications with Electron" (Ghatole), Rust + Tauri guides.
 
 ## Relaciones con otros módulos
 
-- [Web](../026-Web/) — Electron/Tauri renderizan UI web, conocimientos de HTML/CSS/JS compartidos
-- [Mobile](../025-Mobile/) — Diseño UI/UX multiplataforma, patrones de estado
-- [Frameworks](../002-Frameworks/) — Frameworks desktop y librerías UI
-- [Languages](../001-Languages/) — Rust (Tauri), C++ (Qt), C# (WPF/MAUI), Python (GTK/PyQt)
-- [Security](../009-Security/) — Sandboxing, code signing, permisos del SO
-- [OperatingSystems](../004-OperatingSystems/) — APIs específicas de Windows, macOS, Linux
-- [IDEs](../075-IDEs/) — Las apps desktop más famosas (VS Code, JetBrains) son Electron/Java
+| Módulo | Relación |
+|--------|----------|
+| [001-Languages](../001-Languages/) | Swift (macOS), C# (Windows), C++ (Qt), JS/TS (Electron/Tauri) |
+| [002-Frameworks](../002-Frameworks/) | Tauri, Electron como frameworks multiplataforma |
+| [004-OperatingSystems](../004-OperatingSystems/) | Win32, Cocoa, Linux system calls, filesystem |
+| [009-Security](../009-Security/) | Code signing, sandboxing, secure storage, IPC security |
+| [010-Architecture](../010-Architecture/) | Arquitectura MVVM, MVC, event-driven |
+| [011-DesignPatterns](../011-DesignPatterns/) | Command (undo/redo), Observer (events), Singleton |
+| [026-Web](../026-Web/) | Electron/Tauri usan tecnologías web |
+| [031-AI](../031-AI/) | On-device AI apps, local LLM desktop clients |
 
 ## Recursos recomendados
 
-- [Electron Documentation](https://www.electronjs.org/docs)
-- [Tauri Documentation](https://tauri.app/start)
-- [Qt Documentation](https://doc.qt.io)
-- [WPF Documentation (Microsoft)](https://learn.microsoft.com/dotnet/desktop/wpf)
-- [.NET MAUI Docs](https://learn.microsoft.com/dotnet/maui)
-- [Flutter Desktop](https://docs.flutter.dev/platform-integration/desktop)
-- "Electron in Action" — Steve Kinney
-- "Qt 6 C++ GUI Programming Cookbook" — Packt
-- [GTK Documentation](https://docs.gtk.org)
+- **Frameworks principales**: Tauri (tauri.app), Electron (electronjs.org), Qt (qt.io), Flutter Desktop (flutter.dev/desktop), .NET MAUI (learn.microsoft.com/dotnet/maui).
+- **Libros**: "Electron in Action" (Morscheuser), "Building Desktop Applications with Electron" (Ghatole), "C++ GUI Programming with Qt 4" (Blanchette, Summerfield), "WPF 4.5 Unleashed" (Nathan).
+- **Cursos**: "Electron for Desktop Apps" (Udemy), "Rust & Tauri" (Udemy), "Qt 6 C++" (Udemy).
+- **Herramientas**: VS Code, Qt Creator, JetBrains Rider (C#), CLion (C++), Rust Rover (Rust), Android Studio (Flutter).
+- **Recursos de diseño**: Human Interface Guidelines (Apple), Windows Design Guidelines, GNOME HIG, Material Design 3.
+
+## Notas adicionales
+
+Tauri es la tendencia más prometedora: apps ligeras, seguras (Rust backend), multiplataforma, con frontend web (React, Vue, Svelte). Electron sigue siendo el estándar para apps que necesitan máximo ecosistema web. Qt es la opción para apps profesionales críticas (CAD, multimedia). Flutter Desktop es excelente para UI consistente cross-platform. Las apps nativas (SwiftUI, WinUI) ofrecen mejor integración con el SO pero requieren desarrollo separado. Las aplicaciones de escritorio con AI local (LLM, Whisper) son una tendencia creciente.

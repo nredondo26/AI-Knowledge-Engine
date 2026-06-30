@@ -1,77 +1,81 @@
 # 026-Web: Desarrollo Web
 
-## Descripción del dominio
+## Descripción ampliada del dominio
 
-El desarrollo web abarca la creación de sitios y aplicaciones accesibles a través de navegadores. Incluye el frontend (HTML, CSS, JavaScript), backend (servidores, APIs), protocolos de comunicación (HTTP, WebSocket), almacenamiento (cookies, localStorage, IndexedDB), rendimiento (Core Web Vitals), accesibilidad (WCAG), seguridad (CORS, CSP, XSS) y experiencias inmersivas (WebGL, WebGPU, WASM). Las PWAs y las Single Page Applications (SPA) dominan el panorama actual.
+El desarrollo web abarca la creación y mantenimiento de sitios web y aplicaciones web que se ejecutan en navegadores. Se divide en frontend (interfaz de usuario, HTML/CSS/JavaScript), backend (lógica del servidor, APIs, bases de datos) y full-stack (ambos). La web moderna ha evolucionado desde páginas estáticas (1990s) → web 2.0 dinámica (2000s, AJAX) → SPA (Single Page Applications, 2010s, React/Angular) → SSR/SSG (Next.js, Nuxt, 2020s) → Edge computing (2022+, Vercel Edge Functions, Cloudflare Workers). Los estándares web (W3C, WHATWG) definen HTML, CSS, DOM y APIs web. Los navegadores principales son Chrome (65% market share), Safari (18%), Firefox (3%), Edge (5%). Las tendencias actuales incluyen: Server Components (React Server Components, streaming SSR), Edge computing, WebAssembly (WASM) en el frontend, aplicaciones web progresivas (PWAs), una creciente importancia de Core Web Vitals (LCP, FID, CLS), y Web3/blockchain d-apps. El desarrollo web es el área más accesible para empezar en programación — solo se necesita un navegador y editor de texto — y al mismo tiempo extremadamente profunda.
 
-## Conceptos clave
+## Tabla de conceptos clave
 
-- **HTML5**: Última versión del lenguaje de marcado, semántica, elementos multimedia
-- **CSS3**: Hojas de estilo modernas, Flexbox, Grid, animaciones, variables, custom properties
-- **JavaScript (ES6+)**: Lenguaje de scripting de la web, async/await, módulos, proxies
-- **DOM (Document Object Model)**: Representación en memoria de la estructura HTML manipulable via JS
-- **SPA (Single Page Application)**: App que carga una sola página y actualiza contenido dinámicamente
-- **SSR (Server-Side Rendering)**: Renderizado en servidor para mejor SEO y primera carga
-- **SSG (Static Site Generation)**: Generación de HTML estático en build time
-- **PWA (Progressive Web App)**: App web instalable con service workers, offline, push
-- **WASM (WebAssembly)**: Binario compilado de bajo nivel ejecutable en navegadores (Rust, C++)
-- **WebSocket**: Protocolo de comunicación bidireccional persistente en tiempo real
-- **WebGL / WebGPU**: APIs de renderizado 3D acelerado por GPU en el navegador
-- **REST vs GraphQL**: Estilos de arquitectura de APIs web
-- **Core Web Vitals**: Métricas de rendimiento web (LCP, FID, CLS)
-- **WCAG (Web Content Accessibility Guidelines)**: Estándares de accesibilidad web
-- **CORS (Cross-Origin Resource Sharing)**: Mecanismo de seguridad para recursos entre orígenes
-- **CSP (Content Security Policy)**: Cabecera de seguridad contra XSS
-- **Microfrontends**: Arquitectura donde el frontend se compone de aplicaciones independientes
-- **CDN (Content Delivery Network)**: Red de servidores distribuidos para entrega rápida de contenido
+| Concepto | Descripción | Estándares/Tecnologías |
+|----------|-------------|----------------------|
+| HTML5 | Lenguaje de marcado semántico para estructura web | HTML Living Standard (WHATWG) |
+| CSS3 | Estilos visuales, layouts, animaciones, responsividad | CSS Grid, Flexbox, Custom Properties, Media Queries |
+| JavaScript | Lenguaje de programación del navegador (y servidor con Node.js) | ES6+, TypeScript, Web APIs (DOM, Fetch, Canvas) |
+| DOM (Document Object Model) | Representación en árbol de la página web | Manipulación DOM, eventos, shadow DOM |
+| SPA Single Page Application | App que carga una sola página HTML y actualiza contenido dinámicamente | React, Vue, Angular, Svelte |
+| SSR Server-Side Rendering | Renderizado HTML en servidor, hydrated en cliente | Next.js, Nuxt, Remix, SvelteKit |
+| SSG Static Site Generation | Generar HTML estático en build time | Next.js (export), Gatsby, Astro, 11ty |
+| PWA Progressive Web App | App web instalable con capacidades nativas (offline, push) | Service Workers, Web App Manifest |
+| Web Components | Componentes reutilizables de navegador nativo | Custom Elements, Shadow DOM, HTML Templates |
+| Responsive Design | Diseño adaptable a diferentes tamaños de pantalla | Media queries, fluid grids, mobile-first |
+| WebAssembly (WASM) | Código binario ejecutable en navegador (C, Rust, Go) | WASM, Emscripten, AssemblyScript, Blazor |
+| WebSockets | Comunicación bidireccional en tiempo real | ws, Socket.IO, WebSocket API, SSE |
+| Web APIs | APIs de navegador (geolocation, camera, bluetooth, etc.) | Web API MDN reference |
 
 ## Tecnologías principales
 
-- **HTML5 / CSS3**: Fundamentos del desarrollo web, Canvas, SVG, Web Components
-- **JavaScript (ES2024)**: Lenguaje base, TypeScript como superset tipado
-- **React**: Biblioteca de UI declarativa, ecosistema masivo, Next.js para SSR/SSG
-- **Vue.js**: Framework progresivo, Nuxt para SSR, Pinia para estado
-- **Angular**: Framework completo de Google, TypeScript nativo, RxJS
-- **Svelte**: Framework compilado, sin virtual DOM, código más pequeño
-- **Solid.js**: Framework reactivo con rendimiento cercano a vanilla JS
-- **Next.js**: Framework React con SSR, SSG, API routes, App Router
-- **Nuxt.js**: Framework Vue con SSR, módulos, auto-import
-- **Astro**: Static site builder con islands architecture y cero JS por defecto
-- **Tailwind CSS**: Framework CSS utility-first, diseño rápido y consistente
-- **Shadcn/ui**: Componentes React reutilizables sin instalar paquetes
-- **Webpack / Vite / Turbopack**: Bundlers y build tools modernos
-- **ESLint / Prettier**: Linting y formateo de código
-- **Vitest / Playwright / Cypress**: Testing unitario y E2E
-- **Vercel / Netlify / Cloudflare Pages**: Plataformas de deploy serverless
+| Capa | Tecnologías | Frameworks populares | Testing | Bundler |
+|------|-------------|---------------------|---------|---------|
+| Frontend Framework | React, Vue, Angular, Svelte, Solid | Next.js, Nuxt, Astro, Remix, Gatsby | Jest, Vitest, Testing Library, Cypress, Playwright | Vite, Webpack, esbuild, Turbopack |
+| CSS | Tailwind, CSS Modules, Styled Components, SASS, PostCSS | Bootstrap, Material UI, Chakra, Radix UI, DaisyUI | Percy, Chromatic, Storybook | Vite PostCSS |
+| Backend | Node.js, Python (Django, FastAPI), Java (Spring), Go, Rust | Express, Next.js, Fastify, Hono, Koa | pytest, Vitest, JUnit, Supertest | — |
+| State Management | Redux, Zustand, Pinia, Jotai, Recoil, Signals | TanStack Query, SWR, Apollo Client | MSW (Mock Service Worker) | — |
+| GraphQL | Apollo, Relay, Yoga, GraphQL Mesh | Hasura, Prisma, TypeGraphQL | — | — |
+| Database | PostgreSQL, MySQL, MongoDB, SQLite, Redis | Prisma, TypeORM, Drizzle, Mongoose | Testcontainers, pg-mem | — |
+| Cloud | Vercel, Netlify, Cloudflare, AWS Amplify | SST, AWS CDK, Terraform | — | — |
 
-## Hoja de ruta
+## Hoja de ruta detallada
 
-1. **Principiante**: HTML semántico, CSS (Flexbox, Grid), JavaScript (DOM, eventos, fetch). Crear sitio web estático responsive. Publicar con GitHub Pages.
-2. **Intermedio**: Framework JS (React/Vue). Enrutamiento, estado global, consumo de APIs. Build tools (Vite). TypeScript básico. Formularios, validación, autenticación JWT. Despliegue en Vercel/Netlify.
-3. **Avanzado**: SSR/SSG con Next.js/Nuxt. PWAs con service workers. Optimización de rendimiento (lazy loading, code splitting, Core Web Vitals). Testing (Vitest, Playwright). CI/CD web. Microfrontends.
-4. **Experto**: WASM con Rust/Go. WebGPU para gráficos avanzados. Técnicas de performance al límite (virtual scrolling, streaming SSR). Arquitecturas de tiempo real (WebSockets, WebRTC). Edge computing con funciones serverless globales.
+1. **Principiante (0-3 meses)**: HTML5: estructura semántica (header, main, section, article, nav, aside, footer), elementos (h1-h6, p, a, img, ul/ol/li, table, form, input, button), atributos (class, id, href, src, alt, data-*). CSS3: selectors (class, id, element, attribute, pseudo-classes, pseudo-elements), box model (margin, border, padding, content), display (block, inline, inline-block, none), Flexbox (container: display flex, justify-content, align-items, flex-direction; items: flex, order), Grid (display grid, grid-template-columns/rows, gap), responsive design (media queries, mobile-first, rem/em units, viewport). JavaScript básico: variables (let, const), tipos (string, number, boolean, array, object, null, undefined), operators, conditionals (if, else, switch), loops (for, for..of, while), functions (declaration, arrow, parameters, return), DOM manipulation (querySelector, addEventListener, template literals).
+   - Proyecto: Página web personal (HTML + CSS responsive) con Flexbox/Grid. Página interactiva (to-do list, contador) con JS puro.
+   - Lectura: MDN Web Docs, freeCodeCamp Responsive Web Design, JavaScript.info, "Eloquent JavaScript" (Haverbeke).
+
+2. **Intermedio (3-8 meses)**: Frontend framework: React (components, props, state, hooks: useState, useEffect, useContext, custom hooks). TypeScript: types, interfaces, enums, generics, utility types. State management: Redux Toolkit (createSlice, configureStore, useSelector, useDispatch), Zustand. Routing: React Router DOM (BrowserRouter, Routes, Route, Link, useParams, useNavigate). HTTP client: fetch API, Axios, TanStack Query (useQuery, useMutation, caching, stale-while-revalidate). Forms: React Hook Form + Zod (validation). Testing: Vitest (unit), Testing Library (React Testing Library), MSW (API mocking). Styling: Tailwind CSS (utility-first, responsive, custom config). Bundler: Vite (config, plugins, HMR). Git y GitHub Pages / Vercel deployment.
+   - Proyecto: Dashboard con React + TypeScript + Vite + Tailwind + TanStack Query. CRUD app con API mockeada (MSW) o real (JSON Server). Publicado en Vercel.
+   - Lectura: "The Road to React" (Wieruch), "TypeScript Handbook" (typescriptlang.org), React docs, Vite docs.
+
+3. **Avanzado (6-12 meses)**: Full-stack: Next.js (pages router vs app router, server components, client components, server actions, API routes, middleware). Autenticación: NextAuth.js/Auth.js, Clerk, Supabase Auth. Database: Prisma ORM (models, migrations, queries, relations) + PostgreSQL (planetscale, neon, supabase). SSR/SSG/ISR: getStaticProps, getServerSideProps, incremental static regeneration (revalidate), server components. Performance: Core Web Vitals optimization (LCP: image optimization, preload; FID: reduce JS; CLS: size attributes, layout shifts), lazy loading (dynamic import, Suspense), code splitting, lighthouse 90+ scores. Web APIs: Canvas, WebGL, Web Workers, WebSockets (Socket.IO), Service Workers (PWA), Geolocation, File API. GraphQL: Apollo Client, GraphQL Yoga, Hasura. Security: CORS, CSP (Content Security Policy), XSS prevention, CSRF, HTTPS, secure cookies, input sanitization. CI/CD: GitHub Actions (lint + test + build + deploy). Accessibility: WCAG 2.1 AA, semantic HTML, ARIA attributes, keyboard navigation, screen reader testing.
+   - Proyecto: Full-stack Next.js app (e-commerce, SaaS dashboard, blog platform) con Prisma + PostgreSQL + auth + search + payment (Stripe). Lighthouse 90+.
+   - Certificación: Meta Front-End Developer (Coursera), Google Web Developer certification (no oficial), AWS Cloud Practitioner.
+
+4. **Experto (12+ meses)**: Edge computing: Vercel Edge Functions, Cloudflare Workers, Deno Deploy, Edge Middleware (geolocation, A/B testing, i18n). Monorepo: Turborepo (build caching, task orchestration), Nx (code generation, dependency graph). Micro-frontends: Module Federation (Webpack 5), single-spa, qiankun. WebAssembly: WASM in browser (Rust + wasm-pack, Go + WASM), WASM for compute-intensive tasks (video processing, ML inference). Advanced patterns: Server Components + streaming SSR (React 19), React Server Actions, concurrent rendering (Suspense, startTransition, useDeferredValue). Performance at scale: CDN strategies (Fastly, Cloudflare), ISR at scale, incremental builds (Turbopack), stale-while-revalidate caching. Web security: OAuth 2.0 (PKCE), session management, rate limiting (Upstash), bot detection, IP blocking. Observability: OpenTelemetry (web vitals, custom spans), Sentry (error tracking), PostHog (analytics). Web real-time: WebSockets at scale (WebSocket load balancers, Redis pub/sub), WebRTC (video/audio calls). AI/ML web: TensorFlow.js (in-browser ML), Hugging Face Inference API, integration con LLMs (streaming chat, AI features). Auth0 / Clerk / WorkOS enterprise auth.
+   - Proyecto: Micro-frontends with Module Federation. Edge-deployed app with Cloudflare Workers + D1. WASM module for video processing. AI-powered web app.
+   - Certificación: AWS Solutions Architect Associate, Google Cloud Certified, Kubernetes CKA.
 
 ## Relaciones con otros módulos
 
-- [Mobile](../025-Mobile/) — PWAs, diseño responsive, APIs compartidas web ↔ móvil
-- [Desktop](../027-Desktop/) — Electron, Tauri (apps web como escritorio)
-- [APIs](../079-APIs/) — REST, GraphQL, WebSockets, APIs del navegador
-- [Frameworks](../002-Frameworks/) — Frameworks JS y CSS para desarrollo web
-- [Languages](../001-Languages/) — JavaScript, TypeScript, HTML, CSS
-- [Security](../009-Security/) — CORS, CSP, XSS, CSRF, OWASP Top 10
-- [Cloud](../005-Cloud/) — Deploy, CDN, serverless, edge functions
-- [Architecture](../010-Architecture/) — Microfrontends, SPA, SSR, JAMstack
-- [DesignPatterns](../011-DesignPatterns/) — Patrones de UI, estado, composición
+| Módulo | Relación |
+|--------|----------|
+| [001-Languages](../001-Languages/) | HTML, CSS, JavaScript/TypeScript como lenguajes web |
+| [002-Frameworks](../002-Frameworks/) | React, Vue, Angular, Next.js como frameworks web |
+| [003-Databases](../003-Databases/) | DB persistencia para aplicaciones web |
+| [005-Cloud](../005-Cloud/) | Vercel, Netlify, Cloudflare, AWS para hosting y edge |
+| [006-Containers](../006-Containers/) | Docker para entornos de desarrollo y producción |
+| [008-Networking](../008-Networking/) | HTTP/2, HTTP/3, WebSockets, CDN, DNS |
+| [009-Security](../009-Security/) | CORS, CSP, OWASP Top 10, HTTPS, Auth |
+| [011-DesignPatterns](../011-DesignPatterns/) | Component patterns, hooks patterns, render props |
+| [012-Testing](../012-Testing/) | Testing unitario, integración, E2E |
+| [025-Mobile](../025-Mobile/) | PWAs, responsive design, mobile web |
+| [031-AI](../031-AI/) | TensorFlow.js, AI-powered web features |
 
 ## Recursos recomendados
 
-- [MDN Web Docs](https://developer.mozilla.org)
-- [web.dev](https://web.dev)
-- [React Documentation](https://react.dev)
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Vue.js Guide](https://vuejs.org/guide)
-- [Tailwind CSS Docs](https://tailwindcss.com/docs)
-- "Eloquent JavaScript" — Marijn Haverbeke
-- "JavaScript: The Good Parts" — Douglas Crockford
-- [WebGL Fundamentals](https://webglfundamentals.org)
-- [Can I Use](https://caniuse.com)
+- **Documentación**: MDN Web Docs (developer.mozilla.org), web.dev (Google), CSS-Tricks, React docs (react.dev), Next.js docs.
+- **Libros**: "Eloquent JavaScript" (Haverbeke, 4ª ed.), "The Road to React" (Wieruch), "Fullstack React" (Accomazzo), "CSS: The Definitive Guide" (Meyer, Weyl), "Designing Web APIs" (Jin, Sahni, Shevat).
+- **Cursos**: freeCodeCamp (free), The Odin Project (free), Frontend Masters, Epic React (Kent C. Dodds), Scrimba.
+- **Herramientas**: Chrome DevTools, VS Code, React DevTools, Redux DevTools, Lighthouse, PageSpeed Insights, web.dev/measure.
+- **Estándares**: WHATWG HTML Living Standard, W3C CSS specs, TC39 ECMAScript proposals, W3C Web Platform.
+
+## Notas adicionales
+
+El desarrollo web es el entry point más común en tecnología. React/Next.js es el stack más demandado actualmente. Vite ha reemplazado a Webpack como bundler por defecto. TypeScript es estándar en proyectos web modernos. Core Web Vitals son críticos para SEO y experiencia de usuario. El futuro incluye server components, edge computing, y WASM. El ecosistema web evoluciona rápidamente: mantenerse actualizado con newsletters y blogs es esencial. La especialización (frontend, backend, full-stack) es una decisión personal; el conocimiento full-stack proporciona una visión integral valiosa.
